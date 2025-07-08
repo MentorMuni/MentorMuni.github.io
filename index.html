@@ -3,36 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MentorMuni - Mentorship Program</title>
+  <title>Home | MentorMuni</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="container">
-    <img src="images/mentormuni-logonew.jpg" alt="MentorMuni Logo" class="logo" />
-    <h1>MentorMuni</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="training.html">Training</a></li>
-        <li><a href="mentorship.html">Mentorship</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="aboutus.html">About Us</a></li>
-      </ul>
-    </nav>
+  <header>
+    <div class="container nav-bar">
+      <img src="images/mentormuni-logo.jpg" alt="MentorMuni Logo" class="logo" />
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="training.html">Training</a></li>
+          <li><a href="mentorship.html">Mentorship</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <main class="container">
-    <section>
-      <h2>Welcome to MentorMuni</h2>
-      <p>Your one-stop solution for training, placement, and mentorship.</p>
-    </section>
-    <section>
-      <img src="images/comingsoon.jpg" alt="Mentorship Program" class="featured-image" />
+  
+  <section class="hero">
+    <div class="container hero-content">
+      <div>
+        <h1>Learn, Grow & Lead with MentorMuni</h1>
+        <p>Upskill with mentorship, training & placement guidance tailored for engineering graduates.</p>
+        <a href="contact.html" class="cta-button">Join Free Mentorship</a>
+      </div>
+      <img src="images/banner-mentorship.jpg" alt="Mentorship Banner" />
+    </div>
+  </section>
+  <section class="features container">
+    <h2>What We Offer</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Live Mentorship</h3>
+        <p>1-on-1 guidance from industry experts to help you reach your career goals.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Placement Support</h3>
+        <p>End-to-end placement help including mock interviews, resume building & referrals.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Practical Training</h3>
+        <p>Real-world projects, hands-on coding and job-ready skills in .NET, JavaScript & more.</p>
+      </div>
+    </div>
+  </section>
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Get Placed?</h2>
+      <p>Start your journey with a strong foundation. No fees until you're job ready.</p>
+      <a href="contact.html" class="cta-button-alt">Book Free Call</a>
+    </div>
+  </section>
+
+    <section class="features">
+      <h2>Learn, Grow & Lead with MentorMuni</h2>
+      <p>Upskill with mentorship, training & placement guidance tailored for engineering graduates.</p>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 MentorMuni. All rights reserved.</p>
+    <div class="container footer-content">
+      <p>&copy; 2025 MentorMuni. All rights reserved.</p>
+    </div>
   </footer>
 </body>
 </html>
