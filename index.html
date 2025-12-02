@@ -1,74 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home | MentorMuni</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MentorMuni — Placement Mentorship for Engineering Students</title>
+  <meta name="description" content="MentorMuni: College-specific placement training — GD, PI, technical interviews, 5 mock interviews, 1:1 mentorship and alumni sessions. Fees ₹12,000." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lottie-web@5.9.4/build/player/lottie.min.js"></script>
+  <script defer src="app.js"></script>
 </head>
 <body>
-  <header>
-    <div class="container nav-bar">
-      <img src="images/mentormuni-logo.jpg" alt="MentorMuni Logo" class="logo" />
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="training.html">Training</a></li>
-          <li><a href="mentorship.html">Mentorship</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="aboutus.html">About Us</a></li>
-        </ul>
-      </nav>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="brand">MentorMuni</div>
+      <div class="top-actions">
+        <a class="link" href="#program">Program</a>
+        <a class="link" href="#mentors">Mentors</a>
+        <a class="btn btn-primary" id="btnEnroll" href="#contact">Enroll — ₹12,000</a>
+        <button class="btn btn-ghost" id="btnLogin">College / Mentor Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero container grid" data-aos="fade-up">
+    <div class="hero-left">
+      <h1>From campus stress to placement success — college-specific mentorship that works.</h1>
+      <p class="lead">5 full mock interviews • 1-on-1 mentorship • Sessions by seniors from your college • Company-focused practice packs</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary large" href="#contact">Reserve Seat — ₹12,000</a>
+        <a class="btn btn-outline" href="#program">View Program</a>
+      </div>
+      <ul class="kpis">
+        <li><strong class="counter" data-target="1200">0</strong><span>Students trained</span></li>
+        <li><strong class="counter" data-target="95">0</strong><span>% Placement intent</span></li>
+        <li><strong class="counter" data-target="150">0</strong><span>Mentors & Alumni</span></li>
+      </ul>
+    </div>
+
+    <div class="hero-right">
+      <div id="lottie-hero" class="lottie-hero" data-src="https://assets1.lottiefiles.com/packages/lf20_tfb3estd.json"></div>
+      <div class="hero-card" data-aos="fade-left">
+        <h4>College Batch: <span id="hero-college">Select your college</span></h4>
+        <p class="muted">Seats left: <strong id="seats-left">25</strong></p>
+        <a class="btn btn-ghost" id="btn-quick-join">Quick Join</a>
+      </div>
     </div>
   </header>
 
-  
-  <section class="hero">
-    <div class="container hero-content">
-      <div>
-        <h1>Learn, Grow & Lead with MentorMuni</h1>
-        <p>Upskill with mentorship, training & placement guidance tailored for engineering graduates.</p>
-        <a href="contact.html" class="cta-button">Join Free Mentorship</a>
-      </div>
-      <img src="images/banner-mentorship.jpg" alt="Mentorship Banner" />
+  <!-- PROGRAM -->
+  <section id="program" class="section container" data-aos="fade-up">
+    <h2 class="section-title">Our Program — Built for results</h2>
+    <div class="features grid-3">
+      <article class="feature" data-aos="fade-up" data-aos-delay="50">
+        <div class="feature-lottie" data-src="https://assets7.lottiefiles.com/packages/lf20_q5pk6p1k.json"></div>
+        <h3>Technical Mastery</h3>
+        <p>10–12 focused lectures, DSA patterns, timed coding sessions, and company-style problems.</p>
+      </article>
+
+      <article class="feature" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-lottie" data-src="https://assets10.lottiefiles.com/packages/lf20_troj0m1r.json"></div>
+        <h3>Mock Interview Lab</h3>
+        <p>5 recorded mocks (technical + HR), detailed feedback, and tailored improvement plans.</p>
+      </article>
+
+      <article class="feature" data-aos="fade-up" data-aos-delay="150">
+        <div class="feature-lottie" data-src="https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json"></div>
+        <h3>Alumni-Led Sessions</h3>
+        <p>Direct experience from seniors placed in top companies, college-specific tips & resume walkthroughs.</p>
+      </article>
     </div>
   </section>
-  <section class="features container">
-    <h2>What We Offer</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <h3>Live Mentorship</h3>
-        <p>1-on-1 guidance from industry experts to help you reach your career goals.</p>
+
+  <!-- COMPANIES -->
+  <section class="section container" data-aos="fade-up">
+    <h3 class="muted center">Company-specific tracks we prepare for</h3>
+    <div class="companies grid-6">
+      <span>TCS</span><span>Infosys</span><span>Wipro</span><span>Capgemini</span><span>Accenture</span><span>Amazon</span>
+    </div>
+  </section>
+
+  <!-- MENTORS -->
+  <section id="mentors" class="section container" data-aos="fade-up">
+    <h2 class="section-title">Mentors & Placed Seniors</h2>
+    <div class="mentor-grid">
+      <div class="mentor-card">
+        <img src="https://i.pravatar.cc/150?img=12" alt="Rahul — Capgemini">
+        <h4>Rahul Sharma</h4><p class="muted">Placed @ Capgemini</p>
+        <p class="small">DSA mentor • Mock interviewer</p>
       </div>
-      <div class="feature-card">
-        <h3>Placement Support</h3>
-        <p>End-to-end placement help including mock interviews, resume building & referrals.</p>
+      <div class="mentor-card">
+        <img src="https://i.pravatar.cc/150?img=32" alt="Pooja — Infosys">
+        <h4>Pooja Verma</h4><p class="muted">Placed @ Infosys</p>
+        <p class="small">HR prep • PI mentor</p>
       </div>
-      <div class="feature-card">
-        <h3>Practical Training</h3>
-        <p>Real-world projects, hands-on coding and job-ready skills in .NET, JavaScript & more.</p>
+      <div class="mentor-card">
+        <img src="https://i.pravatar.cc/150?img=7" alt="Karan — TCS">
+        <h4>Karan Patel</h4><p class="muted">Placed @ TCS</p>
+        <p class="small">System design • Interview coach</p>
       </div>
     </div>
   </section>
-  <section class="cta">
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner" data-aos="zoom-in">
     <div class="container">
-      <h2>Ready to Get Placed?</h2>
-      <p>Start your journey with a strong foundation. No fees until you're job ready.</p>
-      <a href="contact.html" class="cta-button-alt">Book Free Call</a>
+      <h3>Limited seats per college — Reserve your batch seat now</h3>
+      <div class="cta-actions">
+        <a class="btn btn-primary large" href="#contact">Reserve — ₹12,000</a>
+        <button class="btn btn-outline" id="btn-schedule">Book a free 10-min call</button>
+      </div>
     </div>
   </section>
 
-    <section class="features">
-      <h2>Learn, Grow & Lead with MentorMuni</h2>
-      <p>Upskill with mentorship, training & placement guidance tailored for engineering graduates.</p>
-    </section>
-  </main>
+  <!-- CONTACT / ENROLL -->
+  <section id="contact" class="section container" data-aos="fade-up">
+    <div class="contact-grid">
+      <div class="contact-form-card">
+        <h2>Enroll & Reserve</h2>
+        <p class="muted">Fill quick details — our enrollment team will call within 6 hours.</p>
+        <form id="enrollForm" class="form">
+          <input name="name" placeholder="Full name" required>
+          <input name="college" placeholder="College name" required>
+          <select name="year" required>
+            <option value="">Select year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+          </select>
+          <input name="phone" placeholder="Mobile number" pattern="[0-9]{10}" required>
+          <button class="btn btn-primary" type="submit">Reserve & Pay — ₹12,000</button>
+          <p class="small muted">We accept Razorpay / UPI / Bank transfer. Refund policy: 7 days before start.</p>
+        </form>
+      </div>
 
-  <footer>
-    <div class="container footer-content">
-      <p>&copy; 2025 MentorMuni. All rights reserved.</p>
+      <div class="contact-info">
+        <h3>Why students pick MentorMuni</h3>
+        <ul>
+          <li>College-wise batches — content tuned to your campus process</li>
+          <li>Company-specific mock packs</li>
+          <li>1:1 mentor allocation till placement</li>
+          <li>Lifetime alumni network access</li>
+        </ul>
+        <div class="contact-card">
+          <p><strong>WhatsApp:</strong> <a href="https://wa.me/91XXXXXXXXXX">+91 XXXXXXXXXX</a></p>
+          <p><strong>Email:</strong> <a href="mailto:support@mentormuni.com">support@mentormuni.com</a></p>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">MentorMuni</div>
+        <p class="muted">Placement mentorship for engineering students</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <a class="link" href="#program">Program</a><br>
+        <a class="link" href="#mentors">Mentors</a><br>
+        <a class="link" href="#contact">Enroll</a>
+      </div>
+      <div>
+        <h4>Follow</h4>
+        <a class="link" href="#">LinkedIn</a><br>
+        <a class="link" href="#">Instagram</a>
+      </div>
+    </div>
+    <div class="container copyright">© <span id="yearJS"></span> MentorMuni • All rights reserved</div>
   </footer>
+
+  <!-- FLOATING AI CHATBOT -->
+  <div id="aiChatWidget" class="ai-widget" aria-hidden="true">
+    <button id="aiToggle" class="ai-toggle" aria-label="Open chat">💬</button>
+    <div id="aiPanel" class="ai-panel" hidden>
+      <header class="ai-header">
+        <strong>MentorMuni Assistant</strong>
+        <button id="aiClose" aria-label="Close">✕</button>
+      </header>
+      <div id="aiMessages" class="ai-messages" role="log" aria-live="polite"></div>
+      <form id="aiForm" class="ai-form">
+        <input id="aiInput" placeholder="Ask about batches, syllabus or fees..." autocomplete="off">
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOGIN / JOIN MODAL -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-backdrop" id="backdrop"></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <h3 id="modalTitle">College / Mentor Login</h3>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="student">Student / Batch Join</button>
+        <button class="tab" data-tab="mentor">Mentor Login</button>
+      </div>
+
+      <div class="tab-panel" id="student">
+        <form id="studentLogin" class="form">
+          <input name="college" placeholder="College name" required>
+          <input name="email" placeholder="Email or mobile" required>
+          <select name="batch">
+            <option value="">Select batch</option>
+            <option>Batch A — Jan 10, 2026</option>
+            <option>Batch B — Jan 15, 2026</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Join Batch / Request Info</button>
+        </form>
+      </div>
+
+      <div class="tab-panel hidden" id="mentor">
+        <form id="mentorLogin" class="form">
+          <input name="mentorEmail" placeholder="Mentor email" required>
+          <input name="mentorPass" type="password" placeholder="Password" required>
+          <a class="link small" href="#">Forgot password?</a>
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"EducationalOrganization",
+    "name":"MentorMuni",
+    "url":"https://mentormuni.com",
+    "sameAs": []
+  }
+  </script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 </body>
 </html>
