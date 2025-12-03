@@ -7,7 +7,24 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topbar"><div class="container"><div class="brand">MentorMuni — Mentor Dashboard</div></div></header>
+  <header class="site-header glass-nav">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="assets/logo.svg" alt="MentorMuni logo" class="logo" />
+        <span class="brand-text">MentorMuni</span>
+      </a>
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <a href="/index.html">Home</a>
+        <a href="/index.html#courses">Courses</a>
+        <a href="/index.html#mentors">Mentors</a>
+        <a href="/index.html#contact">Contact</a>
+      </nav>
+      <div class="header-ctas">
+        <a class="btn btn-outline-sm" href="/signin">Sign In</a>
+        <a class="btn btn-primary-sm" href="/index.html#enroll">Enroll</a>
+      </div>
+    </div>
+  </header>
   <main class="container" style="padding:40px 28px">
     <section class="dashboard-grid">
       <div class="card" style="padding:22px;border-radius:12px;box-shadow:var(--shadow);">
@@ -28,5 +45,28 @@
       <a class="btn btn-outline" href="#">Upload Feedback</a>
     </section>
   </main>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo-footer.svg" alt="MentorMuni">
+      </div>
+      <div>
+        <h4>Courses</h4>
+        <a href="/index.html#courses">DSA Placement</a>
+        <a href="/index.html#courses">System Design</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="/about">About Us</a>
+        <a href="/careers">Careers</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>hello@mentormuni.com</p>
+        <p>+91 98765 43210</p>
+      </div>
+    </div>
+    <div class="legal">© <span id="year"></span> MentorMuni. All rights reserved.</div>
+  </footer>
 </body>
 </html>

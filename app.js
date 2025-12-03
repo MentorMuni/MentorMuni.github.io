@@ -1,80 +1,130 @@
-// 1️⃣ Lottie Animations
-document.querySelectorAll('.lottie-hero, .feature-lottie').forEach(el => {
-  const src = el.dataset.src;
-  if(src){
-    lottie.loadAnimation({
-      container: el,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: src
+// ============================
+// MentorMuni - main.js (2025)
+// Modern UI • Smooth UX • Error-proof
+// ============================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ------------------------------
+     FOOTER YEAR
+  ------------------------------ */
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+
+  /* ------------------------------
+     MOBILE NAVIGATION TOGGLE
+  ------------------------------ */
+  const nav = document.getElementById("main-nav");
+  const toggle = document.getElementById("navToggle");
+
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+
+      if (!expanded) {
+        nav.classList.add("nav-open");
+      } else {
+        nav.classList.remove("nav-open");
+      }
+    });
+
+    // Close nav on clicking any link (mobile UX improvement)
+    nav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("nav-open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
     });
   }
-});
 
-// 2️⃣ Counters
-document.querySelectorAll('.counter').forEach(counter => {
-  const updateCount = () => {
-    const target = +counter.dataset.target;
-    const count = +counter.innerText;
-    const increment = target / 200;
-    if(count < target){
-      counter.innerText = Math.ceil(count + increment);
-      setTimeout(updateCount, 10);
-    } else { counter.innerText = target; }
-  };
-  updateCount();
-});
 
-// 3️⃣ Modal Open/Close & Tabs
-const modal = document.getElementById('modal');
-const backdrop = document.getElementById('backdrop');
-document.getElementById('btnLogin').addEventListener('click', () => modal.hidden = false);
-document.getElementById('modalClose').addEventListener('click', () => modal.hidden = true);
-backdrop.addEventListener('click', () => modal.hidden = true);
+  /* ------------------------------
+     FORM: SUBMIT TO GOOGLE SHEETS
+     (via Google Apps Script Web App)
+  ------------------------------ */
+  const contactForm = document.getElementById("contactForm");
+  const clearBtn = document.getElementById("clearForm");
 
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
-    document.getElementById(tab.dataset.tab).classList.remove('hidden');
-  });
-});
+  if (contactForm) {
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-// 4️⃣ AI Chat Widget
-const aiPanel = document.getElementById('aiPanel');
-document.getElementById('aiToggle').addEventListener('click', () => aiPanel.hidden = !aiPanel.hidden);
-document.getElementById('aiClose').addEventListener('click', () => aiPanel.hidden = true);
+      const submitBtn = contactForm.querySelector("button[type='submit']");
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Submitting..."; }
 
-document.getElementById('aiForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const input = document.getElementById('aiInput').value.trim();
-  if(input){
-    const messages = document.getElementById('aiMessages');
-    messages.innerHTML += `<div class="user-msg">You: ${input}</div>`;
-    messages.innerHTML += `<div class="bot-msg">MentorMuni: Our team will contact you soon!</div>`;
-    document.getElementById('aiInput').value = '';
-    messages.scrollTop = messages.scrollHeight;
+      const formData = new FormData(contactForm);
+      const data = Object.fromEntries(formData.entries());
+
+      // TODO: replace with your deployed Google Apps Script Web App URL
+      const GAS_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+
+      try {
+        const res = await fetch(GAS_URL, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: { "Content-Type": "application/json" }
+        });
+
+        if (res.ok) {
+          alert("🎉 Thank you! A MentorMuni counselor will reach out shortly.");
+          contactForm.reset();
+        } else {
+          console.warn('Response not OK', res.status);
+          alert("⚠️ Submission failed. Please email us at hello@mentormuni.com");
+        }
+
+      } catch (err) {
+        console.error("Network Error:", err);
+        alert("❗ Network error — please try again.");
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Get Counselling"; }
+      }
+    });
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => contactForm.reset());
+    }
   }
-});
 
-// 5️⃣ Forms (dummy alert for now)
-document.getElementById('enrollForm').addEventListener('submit', e => {
-  e.preventDefault();
-  alert("Enrollment submitted! Payment link will be sent via WhatsApp.");
-});
-document.getElementById('studentLogin').addEventListener('submit', e => {
-  e.preventDefault();
-  alert("Student info submitted!");
-});
-document.getElementById('mentorLogin').addEventListener('submit', e => {
-  e.preventDefault();
-  alert("Mentor login submitted!");
-});
 
-// 6️⃣ Footer Year
-document.getElementById('yearJS').innerText = new Date().getFullYear();
+  /* ------------------------------
+     MODAL HANDLERS (if any modal exists)
+  ------------------------------ */
+  document.querySelectorAll(".modal-close").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const modal = btn.closest(".modal");
+      if (modal) modal.classList.remove("is-open");
+    });
+  });
 
-// 7️⃣ Initialize AOS
-AOS.init({ duration: 800, once: true });
+
+  /* ------------------------------
+     ENROLL BUTTON SCROLL
+     Scrolls smoothly to #contact
+  ------------------------------ */
+  document.querySelectorAll(".enroll-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.querySelector("#contact");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+
+
+  /* ------------------------------
+     WATCH DEMO BUTTON (Optional future modal)
+  ------------------------------ */
+  const watchDemo = document.getElementById("watchDemo");
+  if (watchDemo) {
+    watchDemo.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Replace with modal or video player later
+      alert("Demo player coming soon! 🚀");
+    });
+  }
+
+});

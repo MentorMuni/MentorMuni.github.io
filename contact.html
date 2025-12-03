@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | MentorMuni</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header glass-nav">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="assets/logo.png" alt="MentorMuni logo" class="logo" />
+        <span class="brand-text">MentorMuni</span>
+      </a>
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="mentors.html">Mentors</a>
+        <a href="outcome.html">Outcomes</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-ctas">
+        <a class="btn btn-outline-sm" href="/signin">Sign In</a>
+        <a class="btn btn-primary-sm" href="#enroll">Enroll</a>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+    <div class="section-head">
+      <h2>Contact Us</h2>
+      <p>Write to us or enroll — we’re ready to guide you!</p>
+    </div>
+    <section class="section-contact">
+      <div class="contact-grid">
+        <div>
+          <h3>Company Info</h3>
+          <p><b>Email:</b> enroll@mentormuni.com</p>
+          <p><b>Phone:</b> 9146421302</p>
+          <p><b>MentorMuni Private Limited</b><br/>
+             123 MentorMuni Lane,<br/>
+             Bengaluru, Karnataka, 560001<br/>
+             (Registered Company)</p>
+        </div>
+        <div>
+          <h3>Enroll/Inquiry Form</h3>
+          <form id="contactForm" class="contact-form" aria-label="Contact form">
+            <label>
+              <span>Full name</span>
+              <input name="name" type="text" required autocomplete="name" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" required autocomplete="email" />
+            </label>
+            <label>
+              <span>Phone</span>
+              <input name="phone" type="tel" required autocomplete="tel" />
+            </label>
+            <label>
+              <span>Message or Interest</span>
+              <textarea name="query" required></textarea>
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-ghost" id="clearForm">Clear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="MentorMuni">
+      </div>
+      <div>
+        <h4>Courses</h4>
+        <a href="courses.html">All Courses</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>enroll@mentormuni.com</p>
+        <p>+91 91464 21302</p>
+      </div>
+    </div>
+    <div class="legal">© <span id="year"></span> MentorMuni. All rights reserved.</div>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>
