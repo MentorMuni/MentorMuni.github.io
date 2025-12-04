@@ -57,19 +57,19 @@
 
       <div class="hero-features">
         <div class="hf-item">
-          <img src="assets/ai-icon.svg" class="icon" alt="">
+          <span class="hf-icon">🤖</span>
           AI Resume Review
         </div>
         <div class="hf-item">
-          <img src="assets/mock-icon.svg" class="icon" alt="">
+          <span class="hf-icon">🎤</span>
           AI Mock Interviews
         </div>
         <div class="hf-item">
-          <img src="assets/mentor-icon.svg" class="icon" alt="">
+          <span class="hf-icon">👥</span>
           1:1 Mentorship
         </div>
         <div class="hf-item">
-          <img src="assets/job-icon.svg" class="icon" alt="">
+          <span class="hf-icon">💼</span>
           Job Assistance
         </div>
       </div>
@@ -98,22 +98,26 @@
 
   <!-- STATS -->
   <section class="stats" aria-hidden="false">
-    <div class="container stats-grid" role="list">
-      <div class="stat" role="listitem">
-        <span class="num">2,500+</span>
-        <p>Students trained</p>
+    <div class="container stats-grid-pro">
+      <div class="stat-card">
+        <span class="stat-icon">🎓</span>
+        <span class="stat-num">2,500+</span>
+        <span class="stat-label">Students trained</span>
       </div>
-      <div class="stat" role="listitem">
-        <span class="num">120+</span>
-        <p>Offers secured</p>
+      <div class="stat-card">
+        <span class="stat-icon">🎯</span>
+        <span class="stat-num">120+</span>
+        <span class="stat-label">Offers secured</span>
       </div>
-      <div class="stat" role="listitem">
-        <span class="num">75+</span>
-        <p>Partner companies</p>
+      <div class="stat-card">
+        <span class="stat-icon">🏢</span>
+        <span class="stat-num">75+</span>
+        <span class="stat-label">Partner companies</span>
       </div>
-      <div class="stat" role="listitem">
-        <span class="num">₹6.2L</span>
-        <p>Average CTC</p>
+      <div class="stat-card">
+        <span class="stat-icon">💸</span>
+        <span class="stat-num">₹6.2L</span>
+        <span class="stat-label">Average CTC</span>
       </div>
     </div>
   </section>
@@ -127,29 +131,44 @@
 
     <div class="card-grid course-grid" aria-live="polite">
       <article class="course-card">
-        <img class="course-thumb" src="assets/course-dsa.jpg" alt="DSA placement"
-          onerror="this.onerror=null;this.src='https://placehold.co/320x160/4F46E5/fff?text=Course+Image';">
         <div class="course-body">
-          <h3>DSA — Placement Track</h3>
-          <p class="course-meta">12 weeks • Live • Projects</p>
-
+          <div class="course-header">
+            <h3>Comprehensive Interview Preparation</h3>
+            <p class="course-meta">12 weeks • Live • Projects • 1:1 Mentorship</p>
+          </div>
+          
           <ul class="course-points">
-            <li>DSA from basics to advanced</li>
-            <li>Weekly coding tests & contests</li>
-            <li>Real interview questions</li>
+            <li>
+              <span class="point-icon">💻</span>
+              <span class="point-text">Technical Interview Mastery</span>
+            </li>
+            <li>
+              <span class="point-icon">👔</span>
+              <span class="point-text">HR Interview Deep Prep</span>
+            </li>
+            <li>
+              <span class="point-icon">📊</span>
+              <span class="point-text">Aptitude Rounds, Analytics</span>
+            </li>
+            <li>
+              <span class="point-icon">📝</span>
+              <span class="point-text">Projects & CV Guidance</span>
+            </li>
           </ul>
-
+          
           <div class="card-foot">
-            <span class="price">₹12,000 / month</span>
+            <div class="price-section">
+              <span class="price">₹12,000</span>
+              <span class="price-period">/ month</span>
+            </div>
             <div class="actions">
-              <a class="btn btn-outline" href="/course-dsa">View</a>
-              <a class="btn btn-primary enroll-btn" data-course="DSA Placement" href="#contact">Enroll</a>
+              <a class="btn btn-outline" href="#contact">View</a>
+              <a class="btn btn-primary enroll-btn" data-course="Interview Prep" href="#contact">Enroll</a>
             </div>
           </div>
         </div>
       </article>
-
-      <!-- Add more course cards similarly -->
+      <!-- Add more course cards as needed -->
     </div>
   </section>
 
@@ -164,11 +183,11 @@
     <div class="container">
       <div class="trust-bar-inner polished">
         <span>Trusted by alumni placed at</span>
-        <img src="assets/company1.svg" alt="TCS" />
-        <img src="assets/company2.svg" alt="Cognizant" />
-        <img src="assets/company3.svg" alt="Deloitte" />
-        <img src="assets/company4.svg" alt="HCL" />
-        <img src="assets/company5.svg" alt="SAP" />
+        <span class="company-badge">🏢 TCS</span>
+        <span class="company-badge">💼 Cognizant</span>
+        <span class="company-badge">🏛️ Deloitte</span>
+        <span class="company-badge">🔷 HCL</span>
+        <span class="company-badge">⚡ SAP</span>
       </div>
     </div>
   </section>
@@ -261,22 +280,52 @@
       </div>
 
       <div class="contact-right contact-benefits">
-        <h3><span style="vertical-align:middle; margin-right:8px;">💡</span> Why MentorMuni?</h3>
-        <ul>
-          <li>✅ Real mentors with proven results</li>
-          <li>✅ AI-powered mock interviews & resume tips</li>
-          <li>✅ Personalised career strategy</li>
-          <li>✅ 1:1 guidance — not group only</li>
-        </ul>
+        <div class="benefits-header">
+          <h3>Why MentorMuni?</h3>
+          <p class="benefits-subtitle">Your trusted partner for placement success</p>
+        </div>
+        
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">👨‍🏫</div>
+            <div class="benefit-content">
+              <h4>Real Mentors</h4>
+              <p>Industry experts with proven placement track records</p>
+            </div>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">🤖</div>
+            <div class="benefit-content">
+              <h4>AI-Powered Tools</h4>
+              <p>Mock interviews & resume analysis powered by advanced AI</p>
+            </div>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">🎯</div>
+            <div class="benefit-content">
+              <h4>Personalized Strategy</h4>
+              <p>Custom career roadmap tailored to your goals</p>
+            </div>
+          </div>
+          
+          <div class="benefit-card">
+            <div class="benefit-icon">👥</div>
+            <div class="benefit-content">
+              <h4>1:1 Guidance</h4>
+              <p>Individual attention, not just group sessions</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="benefits-cta">
+          <div class="benefit-highlight">
+            <span class="highlight-icon">⭐</span>
+            <span class="highlight-text">Join 2,500+ students who got placed</span>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-  <!-- Pricing CTA above footer -->
-  <section class="container" style="text-align:center;margin:56px 0 40px 0;">
-    <div class="section-head">
-      <h2>See transparent pricing & offers</h2>
-      <p>Check our pricing page for the full package breakdown and enroll now.</p>
-      <a class="btn btn-primary" href="pricing.html">Go to Pricing</a>
     </div>
   </section>
 
@@ -308,12 +357,11 @@
     <div class="legal">© <span id="year"></span> MentorMuni. All rights reserved.</div>
   </footer>
 
-  <!-- WhatsApp Chat Floating Button -->
-  <!-- Remove WhatsApp floating button or redesign for subtlety -->
-  <!-- (Remove or comment out)
-  <a href="https://wa.me/919876543210?text=Hi%2C%20I%20want%20info%20about%20MentorMuni%20placement%20program" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-    <img src="assets/whatsapp.svg" alt="WhatsApp Chat" />
-  </a> -->
+  <!-- WhatsApp Share Floating Button -->
+  <a href="https://wa.me/?text=Check%20out%20MentorMuni%20for%20AI-powered%20placement%20training%2C%20real%20mentors%2C%20and%20100%25%20job%20guarantee!%20www.mentormuni.com" class="whatsapp-share-float" title="Share on WhatsApp" target="_blank" rel="noopener" aria-label="Share MentorMuni on WhatsApp">
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><circle cx="28" cy="28" r="28" fill="#25D366"/><path d="M40.776 35.627c-.342-.173-2.019-1-2.33-1.11-.312-.115-.539-.172-.767.172-.228.338-.879 1.11-1.078 1.338-.198.227-.397.257-.74.086-.341-.173-1.442-.531-2.747-1.694-1.016-.905-1.703-2.021-1.903-2.364-.198-.344-.02-.53.149-.702.155-.155.344-.403.517-.605.173-.2.23-.344.344-.573.115-.229.057-.432-.029-.606-.086-.173-.767-1.853-1.05-2.543-.277-.674-.56-.582-.766-.593l-.652-.012c-.228 0-.6.085-.915.414-.314.331-1.199 1.17-1.199 2.849s1.229 3.305 1.399 3.535c.172.228 2.415 3.686 6.071 4.907.849.272 1.511.435 2.027.556.852.181 1.629.155 2.242.094.684-.072 2.019-.826 2.308-1.622.287-.797.287-1.48.2-1.622-.084-.142-.312-.229-.654-.41z" fill="#fff"/>
+    </svg>
+  </a>
 
   <script src="main.js"></script>
 </body>
