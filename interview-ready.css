@@ -1,0 +1,635 @@
+/* ================================
+   Am I Interview Ready? — Feature Styles
+   Mobile-first, clean, viral-ready
+================================ */
+
+:root {
+  --ir-bg: #0B0F19;
+  --ir-surface: #111827;
+  --ir-surface-light: #1E293B;
+  --ir-text: #F1F5F9;
+  --ir-muted: #94A3B8;
+  --ir-primary: #4F46E5;
+  --ir-primary-light: #6366F1;
+  --ir-accent: #06B6D4;
+  --ir-success: #10B981;
+  --ir-warning: #F59E0B;
+  --ir-gradient: linear-gradient(135deg, #4F46E5, #06B6D4);
+  --ir-radius: 14px;
+}
+
+.ir-main {
+  min-height: calc(100vh - 200px);
+  padding: 24px 0 48px;
+}
+
+/* Step visibility */
+.ir-step {
+  display: none;
+  animation: irFadeIn 0.35s ease-out;
+}
+.ir-step.active {
+  display: block;
+}
+@keyframes irFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ir-container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Landing card */
+.ir-landing-card {
+  background: linear-gradient(135deg, #1E293B 0%, #151c23 100%);
+  border: 1.5px solid rgba(79,70,229,0.2);
+  border-radius: 24px;
+  padding: 40px 28px;
+  text-align: center;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+}
+
+.ir-headline {
+  font-size: clamp(28px, 5vw, 38px);
+  font-weight: 800;
+  background: var(--ir-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.ir-subtext {
+  color: var(--ir-muted);
+  font-size: 17px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.ir-microcopy {
+  font-size: 13px;
+  color: var(--ir-muted);
+  opacity: 0.9;
+  margin-bottom: 28px;
+}
+
+.ir-flow-diagram {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 4px;
+  margin: 28px 0;
+  padding: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--ir-radius);
+}
+
+.ir-flow-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(79,70,229,0.1);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ir-text);
+}
+
+.ir-flow-icon {
+  font-size: 18px;
+}
+
+.ir-flow-arrow {
+  color: var(--ir-accent);
+  font-size: 16px;
+}
+
+.ir-cta-btn {
+  padding: 16px 28px;
+  font-size: 17px;
+  min-width: 260px;
+}
+
+/* Form card */
+.ir-card {
+  background: linear-gradient(135deg, #1E293B 0%, #151c23 100%);
+  border: 1.5px solid rgba(79,70,229,0.15);
+  border-radius: 20px;
+  padding: 32px 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+
+.ir-card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ir-text);
+  margin-bottom: 6px;
+}
+
+.ir-card-sub {
+  color: var(--ir-muted);
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+/* Form fields */
+.ir-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ir-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ir-fieldset legend {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ir-muted);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.ir-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ir-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--ir-radius);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ir-radio:hover {
+  border-color: rgba(79,70,229,0.3);
+  background: rgba(79,70,229,0.08);
+}
+
+.ir-radio input {
+  accent-color: var(--ir-primary);
+  width: 18px;
+  height: 18px;
+}
+
+.ir-radio input:checked + span {
+  color: #fff;
+  font-weight: 600;
+}
+
+.ir-radio:has(input:checked) {
+  border-color: var(--ir-primary);
+  background: rgba(79,70,229,0.15);
+}
+
+.ir-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ir-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ir-muted);
+}
+
+.ir-field input,
+.ir-field select {
+  padding: 14px 16px;
+  border-radius: var(--ir-radius);
+  background: var(--ir-surface-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 15px;
+}
+
+.ir-field input:focus,
+.ir-field select:focus {
+  outline: none;
+  border-color: rgba(79,70,229,0.5);
+}
+
+.ir-field-exp,
+.ir-field-placement,
+.ir-field-role {
+  display: none;
+}
+.ir-field-exp.visible,
+.ir-field-placement.visible,
+.ir-field-role.visible {
+  display: flex;
+}
+
+.ir-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+/* Questions / Evaluation */
+.ir-progress-text {
+  font-size: 14px;
+  color: var(--ir-muted);
+  margin-bottom: 8px;
+}
+
+.ir-progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.ir-progress-fill {
+  height: 100%;
+  background: var(--ir-gradient);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.ir-eval-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ir-question-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--ir-radius);
+  padding: 18px 20px;
+}
+
+.ir-question-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ir-text);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.ir-yesno-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.ir-yesno-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: var(--ir-muted);
+  transition: all 0.2s;
+}
+
+.ir-yesno-btn:hover {
+  border-color: rgba(79,70,229,0.4);
+  color: #fff;
+  background: rgba(79,70,229,0.1);
+}
+
+.ir-yesno-btn.selected-yes {
+  border-color: var(--ir-success);
+  background: rgba(16,185,129,0.15);
+  color: var(--ir-success);
+}
+
+.ir-yesno-btn.selected-no {
+  border-color: var(--ir-warning);
+  background: rgba(245,158,11,0.15);
+  color: var(--ir-warning);
+}
+
+/* Loading & Error */
+.ir-loading,
+.ir-error {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.ir-loading p,
+.ir-error p {
+  color: var(--ir-muted);
+  margin-top: 12px;
+}
+
+.ir-error .ir-error-msg {
+  color: #F87171;
+  margin-bottom: 16px;
+}
+
+.ir-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  border: 3px solid rgba(79,70,229,0.2);
+  border-top-color: var(--ir-primary);
+  border-radius: 50%;
+  animation: irSpin 0.8s linear infinite;
+}
+@keyframes irSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Results */
+.ir-results-card {
+  background: linear-gradient(135deg, #1E293B 0%, #151c23 100%);
+  border: 1.5px solid rgba(79,70,229,0.2);
+  border-radius: 24px;
+  padding: 36px 24px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+}
+
+.ir-results-card h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ir-text);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.ir-score-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.ir-score-circle {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.ir-score-circle svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.ir-score-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.08);
+  stroke-width: 8;
+}
+
+.ir-score-fill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 339.3;
+  stroke-dashoffset: 339.3;
+  transition: stroke-dashoffset 0.8s ease-out;
+}
+
+.ir-score-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ir-score-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ir-text);
+}
+
+.ir-score-label {
+  font-size: 14px;
+  color: var(--ir-muted);
+  margin-top: 4px;
+}
+
+.ir-strengths,
+.ir-gaps,
+.ir-roadmap {
+  margin-bottom: 28px;
+}
+
+.ir-strengths h3,
+.ir-gaps h3,
+.ir-roadmap h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ir-text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ir-icon-success {
+  color: var(--ir-success);
+  font-weight: 800;
+}
+
+.ir-icon-warning {
+  color: var(--ir-warning);
+  font-weight: 800;
+}
+
+.ir-strengths ul,
+.ir-gaps ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ir-strengths li,
+.ir-gaps li {
+  padding: 10px 0 10px 28px;
+  position: relative;
+  color: var(--ir-text);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.ir-strengths li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--ir-success);
+  font-weight: 700;
+}
+
+.ir-gaps li::before {
+  content: '!';
+  position: absolute;
+  left: 0;
+  color: var(--ir-warning);
+  font-weight: 700;
+}
+
+.ir-roadmap-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ir-roadmap-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--ir-radius);
+  padding: 14px 18px;
+}
+
+.ir-roadmap-item strong {
+  color: var(--ir-accent);
+  font-size: 14px;
+}
+
+.ir-roadmap-item p {
+  color: var(--ir-muted);
+  font-size: 14px;
+  margin: 6px 0 0;
+  line-height: 1.4;
+}
+
+.ir-cta-section {
+  margin: 32px 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.ir-cta-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ir-text);
+  margin-bottom: 16px;
+}
+
+.ir-cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ir-cta-buttons .btn {
+  flex: 1;
+  min-width: 180px;
+}
+
+.ir-share-section {
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--ir-radius);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.ir-share-section h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ir-text);
+  margin-bottom: 10px;
+}
+
+.ir-share-copy {
+  font-size: 14px;
+  color: var(--ir-muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.ir-share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ir-share-btn {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: var(--ir-text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ir-share-btn:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.ir-share-whatsapp:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+
+.ir-share-linkedin:hover {
+  border-color: #0A66C2;
+  color: #0A66C2;
+}
+
+.ir-results-actions {
+  margin-top: 16px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .ir-landing-card,
+  .ir-card,
+  .ir-results-card {
+    padding: 24px 18px;
+  }
+
+  .ir-flow-diagram {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ir-flow-arrow {
+    transform: rotate(90deg);
+  }
+
+  .ir-radio-group {
+    flex-direction: column;
+  }
+
+  .ir-score-circle {
+    width: 140px;
+    height: 140px;
+  }
+
+  .ir-score-value {
+    font-size: 28px;
+  }
+
+  .ir-cta-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 980px) {
+  .ir-main .nav-toggle {
+    display: block;
+  }
+}

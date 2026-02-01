@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Am I Interview Ready? | MentorMuni</title>
+  <meta name="description" content="Check your interview readiness in 5 minutes – FREE. AI-powered readiness check based on your role & experience. No resume upload required. Used by serious job seekers." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="interview-ready.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header glass-nav">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="MentorMuni logo" class="logo" />
+        <span class="brand-text">MentorMuni</span>
+      </a>
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="interview-ready.html" class="active">Interview Readiness</a>
+        <a href="courses.html">Courses</a>
+        <a href="mentors.html">Mentors</a>
+        <a href="outcome.html">Outcomes</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-ctas">
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="main-nav">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="ir-main" id="irApp">
+    <!-- STEP 0: Landing / Intro -->
+    <section class="ir-step ir-step-0 active" data-step="0">
+      <div class="container ir-container">
+        <div class="ir-landing-card">
+          <h1 class="ir-headline">Are You Interview Ready?</h1>
+          <p class="ir-subtext">AI-powered readiness check based on your role & experience</p>
+          <p class="ir-microcopy">No resume upload required • Free, instant, personalized • Used by serious job seekers</p>
+          
+          <div class="ir-flow-diagram" aria-hidden="true">
+            <div class="ir-flow-item"><span class="ir-flow-icon">👤</span> Profile</div>
+            <span class="ir-flow-arrow">→</span>
+            <div class="ir-flow-item"><span class="ir-flow-icon">❓</span> Questions</div>
+            <span class="ir-flow-arrow">→</span>
+            <div class="ir-flow-item"><span class="ir-flow-icon">📊</span> Score</div>
+            <span class="ir-flow-arrow">→</span>
+            <div class="ir-flow-item"><span class="ir-flow-icon">🗺️</span> Roadmap</div>
+          </div>
+          
+          <button type="button" class="btn btn-primary ir-cta-btn" id="irStartBtn">Start Interview Readiness Check</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 1: Profile Input Form -->
+    <section class="ir-step ir-step-1" data-step="1">
+      <div class="container ir-container">
+        <div class="ir-card">
+          <h2>Tell us about yourself</h2>
+          <p class="ir-card-sub">We’ll personalize your readiness check</p>
+          
+          <form id="irProfileForm" class="ir-form">
+            <fieldset class="ir-fieldset">
+              <legend>Current status</legend>
+              <div class="ir-radio-group">
+                <label class="ir-radio">
+                  <input type="radio" name="currentStatus" value="3rd_year" required />
+                  <span>3rd Year Student</span>
+                </label>
+                <label class="ir-radio">
+                  <input type="radio" name="currentStatus" value="4th_year" />
+                  <span>4th Year Student</span>
+                </label>
+                <label class="ir-radio">
+                  <input type="radio" name="currentStatus" value="professional" />
+                  <span>Working Professional</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="ir-field ir-field-exp" id="irExpField">
+              <label for="irExperience">Years of experience</label>
+              <select id="irExperience" name="experience" aria-label="Years of experience">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10+</option>
+              </select>
+            </div>
+
+            <div class="ir-field">
+              <label for="irTechStack">Primary tech stack</label>
+              <input type="text" id="irTechStack" name="primarySkill" placeholder="e.g. .NET, React, Data Science, Java" required maxlength="100" />
+            </div>
+
+            <div class="ir-field ir-field-placement" id="irPlacementField">
+              <label for="irPlacementType">Placement type</label>
+              <select id="irPlacementType" name="placementType" aria-label="Placement type">
+                <option value="">Select</option>
+                <option value="Campus Placement">Campus Placement</option>
+                <option value="Off Campus Placement">Off Campus Placement</option>
+              </select>
+            </div>
+
+            <div class="ir-field ir-field-role" id="irTargetRoleField">
+              <label for="irTargetRole">Target role</label>
+              <select id="irTargetRole" name="targetRole" aria-label="Target role">
+                <option value="">Select role</option>
+                <option value="Backend">Backend</option>
+                <option value="Frontend">Frontend</option>
+                <option value="Fullstack">Fullstack</option>
+                <option value="Data Science">Data Science</option>
+                <option value="DevOps">DevOps</option>
+                <option value="Mobile">Mobile</option>
+                <option value="QA/Testing">QA/Testing</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="ir-form-actions">
+              <button type="button" class="btn btn-ghost ir-back-btn" data-back="0">Back</button>
+              <button type="submit" class="btn btn-primary" id="irProfileSubmit">Get My Readiness Plan</button>
+            </div>
+          </form>
+
+          <div class="ir-loading ir-loading-plan" id="irLoadingPlan" hidden>
+            <div class="ir-spinner"></div>
+            <p>Generating your personalized questions...</p>
+          </div>
+
+          <div class="ir-error" id="irErrorPlan" hidden>
+            <p class="ir-error-msg"></p>
+            <button type="button" class="btn btn-outline ir-retry-btn">Try Again</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2: YES/NO Topic Evaluation -->
+    <section class="ir-step ir-step-2" data-step="2">
+      <div class="container ir-container">
+        <div class="ir-card">
+          <h2>Answer these questions</h2>
+          <p class="ir-progress-text" id="irProgressText">0 of 0 answered</p>
+          <div class="ir-progress-bar"><div class="ir-progress-fill" id="irProgressFill"></div></div>
+          
+          <form id="irEvalForm" class="ir-eval-form">
+            <div class="ir-questions" id="irQuestions"></div>
+            <div class="ir-form-actions">
+              <button type="button" class="btn btn-ghost ir-back-btn" data-back="1">Back</button>
+              <button type="submit" class="btn btn-primary" id="irEvalSubmit" disabled>See My Results</button>
+            </div>
+          </form>
+
+          <div class="ir-loading ir-loading-eval" id="irLoadingEval" hidden>
+            <div class="ir-spinner"></div>
+            <p>Evaluating your readiness...</p>
+          </div>
+
+          <div class="ir-error" id="irErrorEval" hidden>
+            <p class="ir-error-msg"></p>
+            <button type="button" class="btn btn-outline ir-retry-btn">Try Again</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: Results -->
+    <section class="ir-step ir-step-3" data-step="3">
+      <div class="container ir-container">
+        <div class="ir-results-card">
+          <h2>Your Interview Readiness</h2>
+          
+          <div class="ir-score-section">
+            <div class="ir-score-circle" id="irScoreCircle">
+              <svg viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="irScoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#4F46E5" />
+                    <stop offset="100%" stop-color="#06B6D4" />
+                  </linearGradient>
+                </defs>
+                <circle class="ir-score-bg" cx="60" cy="60" r="54" />
+                <circle class="ir-score-fill" id="irScoreFill" cx="60" cy="60" r="54" stroke="url(#irScoreGradient)" />
+              </svg>
+              <div class="ir-score-content">
+                <span class="ir-score-value" id="irScoreValue">0%</span>
+                <span class="ir-score-label" id="irScoreLabel">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ir-strengths" id="irStrengths">
+            <h3><span class="ir-icon ir-icon-success">✓</span> Strengths</h3>
+            <ul id="irStrengthsList"></ul>
+          </div>
+
+          <div class="ir-gaps" id="irGaps">
+            <h3><span class="ir-icon ir-icon-warning">!</span> Gaps / Areas to improve</h3>
+            <ul id="irGapsList"></ul>
+          </div>
+
+          <div class="ir-roadmap" id="irRoadmap">
+            <h3>Personalized Learning Roadmap</h3>
+            <div class="ir-roadmap-items" id="irRoadmapList"></div>
+          </div>
+
+          <div class="ir-cta-section">
+            <h3>Next steps</h3>
+            <div class="ir-cta-buttons">
+              <a href="courses.html" class="btn btn-primary">Start Learning with MentorMuni</a>
+              <a href="contact.html" class="btn btn-outline">Try AI Mock Interview</a>
+            </div>
+          </div>
+
+          <div class="ir-share-section">
+            <h3>Share your readiness score</h3>
+            <p class="ir-share-copy">"I just checked my interview readiness on MentorMuni – scored <strong id="irShareScore">0%</strong>! 🚀"</p>
+            <div class="ir-share-buttons">
+              <a class="btn ir-share-btn ir-share-whatsapp" href="#" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WhatsApp</a>
+              <a class="btn ir-share-btn ir-share-linkedin" href="#" target="_blank" rel="noopener" aria-label="Share on LinkedIn">LinkedIn</a>
+              <button type="button" class="btn ir-share-btn ir-share-copy" id="irCopyLink" aria-label="Copy link">Copy link</button>
+            </div>
+          </div>
+
+          <div class="ir-form-actions ir-results-actions">
+            <button type="button" class="btn btn-ghost ir-retake-btn" id="irRetakeBtn">Retake Check</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand"><img src="assets/logo.png" alt="MentorMuni"></div>
+      <div><h4>Courses</h4><a href="courses.html">All Courses</a></div>
+      <div><h4>Company</h4><a href="contact.html">Contact</a></div>
+    </div>
+    <div class="legal">© <span id="year"></span> MentorMuni. All rights reserved.</div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="interview-ready.js"></script>
+</body>
+</html>
