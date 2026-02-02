@@ -338,6 +338,49 @@
   margin-top: 12px;
 }
 
+.ir-loading-promo {
+  margin-top: 28px;
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  text-align: left;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.ir-loading-promo-head {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ir-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+}
+.ir-loading-promo-text {
+  font-size: 14px;
+  color: var(--ir-text);
+  line-height: 1.5;
+  margin: 0 0 10px;
+}
+.ir-loading-promo-text strong {
+  color: var(--ir-accent);
+}
+.ir-loading-promo-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ir-text);
+  margin: 0 0 14px;
+}
+.ir-loading-promo-price strong {
+  color: var(--ir-success);
+}
+.ir-loading-promo-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
 .ir-error .ir-error-msg {
   color: #F87171;
   margin-bottom: 16px;

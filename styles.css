@@ -1546,54 +1546,73 @@ input:focus, select:focus, textarea:focus {
 .stats-grid-pro {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 38px;
+  gap: 24px;
   margin: 48px auto 36px auto;
   width: 100%;
   justify-items: center;
 }
 .stat-card {
-  background: linear-gradient(120deg,#151c23 70%,#24b8d4 250%);
-  border-radius: 21px;
-  box-shadow: 0 8px 34px #2fd0e73c, 0 1px 8px #2223;
-  padding: 34px 24px 30px 24px;
+  background: linear-gradient(145deg, #1a2234 0%, #141b28 100%);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  padding: 28px 24px;
   text-align: center;
   width: 100%;
   max-width: 260px;
-  min-width: 170px;
+  min-width: 160px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: box-shadow .21s,transform .19s;
+  transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.2s;
 }
 .stat-card:hover {
-  box-shadow: 0 16px 40px rgba(6,182,212,0.25);
+  box-shadow: 0 12px 36px rgba(79,70,229,0.12);
   transform: translateY(-3px);
+  border-color: rgba(79,70,229,0.2);
 }
 .stat-card:focus { outline: none; }
+.stat-icon-svg {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+  color: rgba(79,70,229,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stat-icon-svg svg {
+  width: 100%;
+  height: 100%;
+}
+.stat-card:hover .stat-icon-svg {
+  color: var(--accent);
+}
 .stat-icon {
   font-size: 30px;
   margin-bottom: 14px;
   opacity: .92;
 }
 .stat-num {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--accent);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
   margin-bottom: 6px;
   display: block;
-  letter-spacing: .01em;
-  line-height: 1.2;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
 }
 @media (min-width: 768px) {
-  .stat-num { font-size: 1.8rem; }
+  .stat-num { font-size: 1.4rem; }
 }
 .stat-label {
-  color: #f9faff;
-  font-size: 1.14rem;
-  font-weight: 600;
-  letter-spacing: .01em;
-  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  margin-top: 4px;
 }
 @media (max-width: 900px) {
   .stats-grid-pro { grid-template-columns: 1fr 1fr; gap: 20px; margin: 32px auto 24px; }

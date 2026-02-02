@@ -13,6 +13,8 @@
     step: 0,
     profile: null,
     questions: [],
+    correctAnswers: [],
+    studyTopics: [],
     answers: {},
     result: null,
   };
@@ -186,18 +188,40 @@
 
       const data = await res.json();
       if (!res.ok) {
-        const msg = res.status === 429
-          ? 'Too many requests. Please wait a moment and try again.'
-          : (data.detail || data.message || 'Request failed');
+        let msg = 'Request failed';
+        if (res.status === 429) msg = 'Too many requests. Please wait a moment and try again.';
+        else if (data.detail) {
+          msg = Array.isArray(data.detail)
+            ? data.detail.map((d) => (typeof d === 'string' ? d : d.msg || JSON.stringify(d))).join('. ')
+            : String(data.detail);
+        } else if (data.message) msg = data.message;
         throw new Error(msg);
       }
 
-      state.questions = Array.isArray(data.evaluation_plan) ? data.evaluation_plan : [];
-      if (state.questions.length === 0) state.questions = ['Interview fundamentals'];
+      const plan = Array.isArray(data.evaluation_plan) ? data.evaluation_plan : [];
+      state.questions = plan.map((item) =>
+        typeof item === 'string' ? item : (item && item.question ? item.question : String(item))
+      );
+      state.correctAnswers = plan.map((item) =>
+        typeof item === 'object' && item && item.correct_answer ? item.correct_answer : 'Yes'
+      );
+      state.studyTopics = plan.map((item) => {
+        if (typeof item === 'object' && item && item.study_topic && String(item.study_topic).trim()) {
+          return String(item.study_topic).trim();
+        }
+        const q = typeof item === 'string' ? item : (item && item.question) || '';
+        return q.length > 60 ? q.slice(0, 57) + '...' : q || 'Interview fundamentals';
+      });
+      if (state.questions.length === 0) {
+        state.questions = ['Interview fundamentals'];
+        state.correctAnswers = ['Yes'];
+        state.studyTopics = ['Interview fundamentals'];
+      }
       state.answers = {};
       goToStep(2);
     } catch (err) {
-      showErrorPlan(true, err.message || 'Something went wrong. Please try again.');
+      const msg = err instanceof Error ? err.message : String(err);
+      showErrorPlan(true, msg || 'Something went wrong. Please try again.');
     } finally {
       showLoadingPlan(false);
       elements.profileForm?.querySelector('button[type="submit"]')?.removeAttribute('disabled');
@@ -266,21 +290,28 @@
         body: JSON.stringify({
           questions: state.questions,
           answers: answers,
+          correct_answers: state.correctAnswers.length ? state.correctAnswers : state.questions.map(() => 'Yes'),
+          study_topics: state.studyTopics.length ? state.studyTopics : state.questions.map((q) => (q.length > 60 ? q.slice(0, 57) + '...' : q)),
         }),
       });
 
       const data = await res.json();
       if (!res.ok) {
-        const msg = res.status === 429
-          ? 'Too many requests. Please wait a moment and try again.'
-          : (data.detail || data.message || 'Request failed');
+        let msg = 'Request failed';
+        if (res.status === 429) msg = 'Too many requests. Please wait a moment and try again.';
+        else if (data.detail) {
+          msg = Array.isArray(data.detail)
+            ? data.detail.map((d) => (typeof d === 'string' ? d : d.msg || JSON.stringify(d))).join('. ')
+            : String(data.detail);
+        } else if (data.message) msg = data.message;
         throw new Error(msg);
       }
 
       state.result = data;
       goToStep(3);
     } catch (err) {
-      showErrorEval(true, err.message || 'Evaluation failed. Please try again.');
+      const msg = err instanceof Error ? err.message : String(err);
+      showErrorEval(true, msg || 'Evaluation failed. Please try again.');
     } finally {
       showLoadingEval(false);
       elements.evalSubmit?.removeAttribute('disabled');
@@ -303,13 +334,17 @@
     if (elements.scoreLabel) elements.scoreLabel.textContent = r.readiness_label || '—';
 
     if (elements.strengthsList) {
-      elements.strengthsList.innerHTML = (r.strengths || []).map(s => `<li>${escapeHtml(s)}</li>`).join('') || '<li>—</li>';
+      const strengths = (r.strengths || []).map((s) => (typeof s === 'string' ? s : (s && s.question) || String(s)));
+      elements.strengthsList.innerHTML = strengths.map((s) => `<li>${escapeHtml(s)}</li>`).join('') || '<li>—</li>';
     }
     if (elements.gapsList) {
-      elements.gapsList.innerHTML = (r.gaps || []).map(g => `<li>${escapeHtml(g)}</li>`).join('') || '<li>No major gaps identified.</li>';
+      const gaps = (r.gaps || []).map((g) => (typeof g === 'string' ? g : (g && g.question) || String(g)));
+      elements.gapsList.innerHTML = gaps.map((g) => `<li>${escapeHtml(g)}</li>`).join('') || '<li>No major gaps identified.</li>';
     }
 
-    const recs = r.learning_recommendations || [];
+    const recs = (r.learning_recommendations || []).map((rec) =>
+      typeof rec === 'object' ? rec : { priority: '', topic: String(rec), why: '' }
+    );
     if (elements.roadmapList) {
       if (recs.length === 0) {
         elements.roadmapList.innerHTML = '<p style="color:var(--ir-muted)">All set! Keep practicing.</p>';
@@ -347,6 +382,8 @@
   function onRetake() {
     state.profile = null;
     state.questions = [];
+    state.correctAnswers = [];
+    state.studyTopics = [];
     state.answers = {};
     state.result = null;
     elements.profileForm?.reset();
