@@ -295,7 +295,8 @@
 
 .ir-yesno-btn {
   flex: 1;
-  padding: 12px 20px;
+  padding: 14px 20px;
+  min-height: 48px;
   border-radius: 10px;
   font-weight: 600;
   font-size: 15px;
@@ -595,15 +596,21 @@
 
 /* Responsive */
 @media (max-width: 600px) {
+  .ir-main { padding: 16px 0 32px; }
+  .ir-container { padding: 0 16px; }
   .ir-landing-card,
   .ir-card,
   .ir-results-card {
     padding: 24px 18px;
   }
 
+  .ir-headline { font-size: 24px; }
+  .ir-subtext { font-size: 15px; }
+
   .ir-flow-diagram {
     flex-direction: column;
     gap: 12px;
+    padding: 12px;
   }
 
   .ir-flow-arrow {
@@ -613,6 +620,8 @@
   .ir-radio-group {
     flex-direction: column;
   }
+
+  .ir-radio { padding: 14px 18px; }
 
   .ir-score-circle {
     width: 140px;
@@ -626,6 +635,11 @@
   .ir-cta-buttons {
     flex-direction: column;
   }
+
+  .ir-cta-buttons .btn { width: 100%; }
+
+  .ir-form-actions { flex-direction: column; }
+  .ir-form-actions .btn { width: 100%; }
 }
 
 @media (max-width: 980px) {
