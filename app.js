@@ -47,9 +47,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const contactForm = document.getElementById("contactForm");
   const clearBtn = document.getElementById("clearForm");
 
+  function clearContactErrors() {
+    ["cfErrorName", "cfErrorEmail", "cfErrorPhone"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = "";
+    });
+    ["cfFieldName", "cfFieldEmail", "cfFieldPhone"].forEach(id => {
+      document.getElementById(id)?.classList.remove("has-error");
+    });
+  }
+
+  function showContactError(fieldId, errorId, msg) {
+    const el = document.getElementById(errorId);
+    if (el) el.textContent = msg;
+    document.getElementById(fieldId)?.classList.add("has-error");
+  }
+
   if (contactForm) {
+    contactForm.addEventListener("input", clearContactErrors);
+    contactForm.addEventListener("change", clearContactErrors);
+
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      clearContactErrors();
+
+      const name = (contactForm.querySelector("[name='name']")?.value || "").trim();
+      const email = (contactForm.querySelector("[name='email']")?.value || "").trim();
+      const phone = (contactForm.querySelector("[name='phone']")?.value || "").trim();
+
+      let valid = true;
+      if (!name) { showContactError("cfFieldName", "cfErrorName", "This field is required"); valid = false; }
+      if (!email) { showContactError("cfFieldEmail", "cfErrorEmail", "This field is required"); valid = false; }
+      if (!phone) { showContactError("cfFieldPhone", "cfErrorPhone", "This field is required"); valid = false; }
+      if (!valid) return;
 
       const submitBtn = contactForm.querySelector("button[type='submit']");
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Submitting..."; }
@@ -84,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (clearBtn) {
-      clearBtn.addEventListener("click", () => contactForm.reset());
+      clearBtn.addEventListener("click", () => { clearContactErrors(); contactForm.reset(); });
     }
   }
 

@@ -22,6 +22,7 @@
   const elements = {
     steps: null,
     startBtn: null,
+    statsCount: null,
     profileForm: null,
     expField: null,
     evalForm: null,
@@ -48,11 +49,34 @@
     cacheElements();
     bindEvents();
     hideExpFieldByDefault();
+    fetchStats();
+    trackPageView();
+  }
+
+  function trackPageView() {
+    fetch(`${API_BASE}/interview-ready/track`, { method: 'POST' }).catch(() => {});
+  }
+
+  async function fetchStats() {
+    try {
+      const res = await fetch(`${API_BASE}/interview-ready/stats`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const checks = Number(data.total_checks) || 0;
+      const views = Number(data.total_views) || 0;
+      const n = checks || views;
+      if (elements.statsCount) {
+        elements.statsCount.textContent = n > 0 ? n.toLocaleString() : '—';
+      }
+    } catch {
+      if (elements.statsCount) elements.statsCount.textContent = '—';
+    }
   }
 
   function cacheElements() {
     elements.steps = document.querySelectorAll('.ir-step');
     elements.startBtn = document.getElementById('irStartBtn');
+    elements.statsCount = document.getElementById('irStatsCount');
     elements.profileForm = document.getElementById('irProfileForm');
     elements.expField = document.getElementById('irExpField');
     elements.placementField = document.getElementById('irPlacementField');
@@ -94,7 +118,11 @@
       radio.addEventListener('change', onStatusChange);
     });
 
-    document.getElementById('irProfileForm')?.addEventListener('change', onStatusChange);
+    document.getElementById('irProfileForm')?.addEventListener('change', function () {
+      clearProfileErrors();
+      onStatusChange();
+    });
+    document.getElementById('irProfileForm')?.addEventListener('input', clearProfileErrors);
     onStatusChange();
 
     document.querySelectorAll('.ir-retry-btn').forEach(btn => {
@@ -154,11 +182,31 @@
     }
   }
 
+  function clearProfileErrors() {
+    ['irErrorStatus', 'irErrorTechStack', 'irErrorPlacement', 'irErrorRole'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '';
+    });
+    ['irFieldsetStatus', 'irFieldTechStack', 'irPlacementField', 'irTargetRoleField'].forEach(id => {
+      document.getElementById(id)?.classList.remove('has-error');
+    });
+  }
+
+  function showFieldError(errorId, msg) {
+    const errEl = document.getElementById(errorId);
+    if (errEl) errEl.textContent = msg;
+    const fieldMap = { irErrorStatus: 'irFieldsetStatus', irErrorTechStack: 'irFieldTechStack', irErrorPlacement: 'irPlacementField', irErrorRole: 'irTargetRoleField' };
+    const fieldId = fieldMap[errorId];
+    if (fieldId) document.getElementById(fieldId)?.classList.add('has-error');
+  }
+
   async function onSubmitProfile(e) {
     e.preventDefault();
+    clearProfileErrors();
     const fd = new FormData(elements.profileForm);
     const status = fd.get('currentStatus');
     const userType = status === 'professional' ? 'working professional' : 'student';
+    const isStudent = userType === 'student';
     const experienceYears = status === 'professional'
       ? parseInt(fd.get('experience') || '0', 10)
       : 0;
@@ -166,10 +214,29 @@
     const targetRole = status === 'professional'
       ? (fd.get('targetRole') || '').trim()
       : (fd.get('placementType') || '').trim();
+    const email = (fd.get('email') || '').trim() || null;
+    const phone = (fd.get('phone') || '').trim() || null;
 
-    if (!primarySkill || !targetRole) return;
+    let valid = true;
+    if (!status) {
+      showFieldError('irErrorStatus', 'This field is required');
+      valid = false;
+    }
+    if (!primarySkill) {
+      showFieldError('irErrorTechStack', 'This field is required');
+      valid = false;
+    }
+    if (isStudent && !targetRole) {
+      showFieldError('irErrorPlacement', 'This field is required');
+      valid = false;
+    }
+    if (!isStudent && !targetRole) {
+      showFieldError('irErrorRole', 'This field is required');
+      valid = false;
+    }
+    if (!valid) return;
 
-    state.profile = { userType, experienceYears, primarySkill, targetRole };
+    state.profile = { userType, experienceYears, primarySkill, targetRole, email, phone };
     elements.profileForm.querySelector('button[type="submit"]')?.setAttribute('disabled', 'disabled');
     showLoadingPlan(true);
     showErrorPlan(false);
@@ -183,6 +250,8 @@
           experience_years: experienceYears,
           primary_skill: primarySkill,
           target_role: targetRole,
+          email: email || undefined,
+          phone: phone || undefined,
         }),
       });
 
@@ -218,6 +287,7 @@
         state.studyTopics = ['Interview fundamentals'];
       }
       state.answers = {};
+      fetchStats();
       goToStep(2);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);

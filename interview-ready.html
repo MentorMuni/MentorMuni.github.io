@@ -42,6 +42,7 @@
           <h1 class="ir-headline">Are You Interview Ready?</h1>
           <p class="ir-subtext">AI-powered readiness check based on your role & experience</p>
           <p class="ir-microcopy">No resume upload required • Free, instant, personalized • Used by serious job seekers</p>
+          <p class="ir-stats" id="irStats" aria-live="polite"><span id="irStatsCount">—</span> job seekers have checked their readiness</p>
           
           <div class="ir-flow-diagram" aria-hidden="true">
             <div class="ir-flow-item"><span class="ir-flow-icon">👤</span> Profile</div>
@@ -65,12 +66,13 @@
           <h2>Tell us about yourself</h2>
           <p class="ir-card-sub">We’ll personalize your readiness check</p>
           
-          <form id="irProfileForm" class="ir-form">
-            <fieldset class="ir-fieldset">
+          <form id="irProfileForm" class="ir-form" novalidate>
+            <fieldset class="ir-fieldset" id="irFieldsetStatus">
               <legend>Current status</legend>
+              <span class="ir-field-error" id="irErrorStatus" aria-live="polite"></span>
               <div class="ir-radio-group">
                 <label class="ir-radio">
-                  <input type="radio" name="currentStatus" value="3rd_year" required />
+                  <input type="radio" name="currentStatus" value="3rd_year" />
                   <span>3rd Year Student</span>
                 </label>
                 <label class="ir-radio">
@@ -101,24 +103,37 @@
               </select>
             </div>
 
-            <div class="ir-field">
+            <div class="ir-field" id="irFieldTechStack">
               <label for="irTechStack">Primary tech stack</label>
-              <input type="text" id="irTechStack" name="primarySkill" placeholder="e.g. .NET, React, Data Science, Java" required maxlength="100" />
+              <input type="text" id="irTechStack" name="primarySkill" placeholder="e.g. .NET, React, Data Science, Java" maxlength="100" />
+              <span class="ir-field-error" id="irErrorTechStack" aria-live="polite"></span>
+            </div>
+
+            <div class="ir-field-row ir-contact-row">
+              <div class="ir-field">
+                <label for="irEmail">Email <span class="ir-optional">(optional)</span></label>
+                <input type="email" id="irEmail" name="email" placeholder="you@example.com" maxlength="255" />
+              </div>
+              <div class="ir-field">
+                <label for="irPhone">Phone <span class="ir-optional">(optional)</span></label>
+                <input type="tel" id="irPhone" name="phone" placeholder="+91 98765 43210" maxlength="20" />
+              </div>
             </div>
 
             <div class="ir-field ir-field-placement" id="irPlacementField">
               <label for="irPlacementType">Placement type</label>
               <select id="irPlacementType" name="placementType" aria-label="Placement type">
-                <option value="">Select</option>
+                <option value="">— Select placement type —</option>
                 <option value="Campus Placement">Campus Placement</option>
                 <option value="Off Campus Placement">Off Campus Placement</option>
               </select>
+              <span class="ir-field-error" id="irErrorPlacement" aria-live="polite"></span>
             </div>
 
             <div class="ir-field ir-field-role" id="irTargetRoleField">
               <label for="irTargetRole">Target role</label>
               <select id="irTargetRole" name="targetRole" aria-label="Target role">
-                <option value="">Select role</option>
+                <option value="">— Select target role —</option>
                 <option value="Backend">Backend</option>
                 <option value="Frontend">Frontend</option>
                 <option value="Fullstack">Fullstack</option>
@@ -128,6 +143,7 @@
                 <option value="QA/Testing">QA/Testing</option>
                 <option value="Other">Other</option>
               </select>
+              <span class="ir-field-error" id="irErrorRole" aria-live="polite"></span>
             </div>
 
             <div class="ir-form-actions">

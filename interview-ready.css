@@ -74,7 +74,18 @@
   font-size: 13px;
   color: var(--ir-muted);
   opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.ir-stats {
+  font-size: 14px;
+  color: var(--ir-accent);
+  font-weight: 500;
   margin-bottom: 28px;
+}
+
+.ir-stats #irStatsCount {
+  font-weight: 700;
 }
 
 .ir-flow-diagram {
@@ -224,6 +235,49 @@
 .ir-field select:focus {
   outline: none;
   border-color: rgba(79,70,229,0.5);
+}
+
+.ir-optional {
+  font-weight: 400;
+  color: var(--ir-muted);
+  font-size: 12px;
+}
+
+.ir-field-error {
+  display: block;
+  font-size: 13px;
+  color: var(--ir-warning);
+  margin-top: 6px;
+  min-height: 1.2em;
+}
+
+.ir-field.has-error input,
+.ir-field.has-error select {
+  border-color: rgba(245, 158, 11, 0.6);
+}
+
+.ir-fieldset.has-error {
+  padding-left: 14px;
+  border-left: 3px solid var(--ir-warning);
+}
+
+.ir-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ir-contact-row {
+  padding: 16px 20px;
+  background: rgba(79, 70, 229, 0.06);
+  border-radius: var(--ir-radius);
+  border-left: 3px solid var(--ir-primary);
+}
+
+@media (max-width: 500px) {
+  .ir-field-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ir-field-exp,

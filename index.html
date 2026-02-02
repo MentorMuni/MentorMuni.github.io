@@ -241,18 +241,21 @@
         <h2><span style="vertical-align:middle; margin-right:8px;">🚀</span>Kickstart Your Placement Journey</h2>
         <p>Share your details — our counselor will call you within 30 minutes.</p>
 
-        <form id="contactForm" class="contact-form" aria-label="Contact form">
-          <label>
+        <form id="contactForm" class="contact-form" aria-label="Contact form" novalidate>
+          <label class="cf-field" id="cfFieldName">
             <span>Full name</span>
-            <input name="name" type="text" required autocomplete="name" />
+            <input name="name" type="text" autocomplete="name" />
+            <span class="cf-field-error" id="cfErrorName" aria-live="polite"></span>
           </label>
-          <label>
+          <label class="cf-field" id="cfFieldEmail">
             <span>Email</span>
-            <input name="email" type="email" required autocomplete="email" />
+            <input name="email" type="email" autocomplete="email" />
+            <span class="cf-field-error" id="cfErrorEmail" aria-live="polite"></span>
           </label>
-          <label>
+          <label class="cf-field" id="cfFieldPhone">
             <span>Phone</span>
-            <input name="phone" type="tel" required autocomplete="tel" />
+            <input name="phone" type="tel" autocomplete="tel" />
+            <span class="cf-field-error" id="cfErrorPhone" aria-live="polite"></span>
           </label>
           <label>
             <span>Course interested</span>
