@@ -10,9 +10,8 @@
   <!-- Header -->
   <header class="site-header glass-nav">
     <div class="container header-inner">
-      <a class="brand" href="/">
-        <img src="assets/logo.png" alt="MentorMuni logo" class="logo" />
-        <span class="brand-text">MentorMuni</span>
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="MentorMuni — Guiding your journey to knowledge" class="logo" />
       </a>
       <nav class="nav" id="main-nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
@@ -28,47 +27,53 @@
       </div>
     </div>
   </header>
-  <main class="container">
-    <div class="section-head">
-      <h2>Contact Us</h2>
-      <p>Write to us or enroll — we’re ready to guide you!</p>
+  <main class="container" style="padding: 48px 22px 72px;">
+    <div class="section-head" style="text-align: center;">
+      <h2>Get in Touch</h2>
+      <p>Have questions? We're here to help. Reach out for enrollment or inquiries.</p>
     </div>
-    <section class="section-contact">
-      <div class="contact-grid">
-        <div>
-          <h3>Company Info</h3>
-          <p><span style="font-size:18px;margin-right:8px;">📧</span><b>Email:</b> enroll@mentormuni.com</p>
-          <p><span style="font-size:18px;margin-right:8px;">📱</span><b>Phone:</b> 9146421302</p>
-          <p><span style="font-size:18px;margin-right:8px;">📍</span><b>MentorMuni Private Limited</b><br/>
-             &nbsp;&nbsp;&nbsp;&nbsp;123 MentorMuni Lane,<br/>
-             &nbsp;&nbsp;&nbsp;&nbsp;Bengaluru, Karnataka, 560001<br/>
-             &nbsp;&nbsp;&nbsp;&nbsp;(Registered Company)</p>
+    <section class="contact-page-grid">
+      <div class="contact-info-card">
+        <h3>Contact Information</h3>
+        <div class="contact-info-item">
+          <span class="contact-icon">✉</span>
+          <div><strong>Email</strong><a href="mailto:enroll@mentormuni.com">enroll@mentormuni.com</a></div>
         </div>
-        <div>
-          <h3>Enroll/Inquiry Form</h3>
-          <form id="contactForm" class="contact-form" aria-label="Contact form">
+        <div class="contact-info-item">
+          <span class="contact-icon">☎</span>
+          <div><strong>Phone</strong><a href="tel:+919146421302">+91 91464 21302</a></div>
+        </div>
+        <div class="contact-info-item">
+          <span class="contact-icon">◉</span>
+          <div><strong>Address</strong><span>MentorMuni Private Limited, 123 MentorMuni Lane, Bengaluru, Karnataka 560001</span></div>
+        </div>
+      </div>
+      <div class="contact-form-card">
+        <h3>Send a Message</h3>
+        <form id="contactForm" class="contact-form" aria-label="Contact form">
+          <div class="contact-form-row">
             <label>
               <span>Full name</span>
-              <input name="name" type="text" required autocomplete="name" />
+              <input name="name" type="text" required autocomplete="name" placeholder="Your name" />
             </label>
             <label>
               <span>Email</span>
-              <input name="email" type="email" required autocomplete="email" />
+              <input name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
             </label>
-            <label>
-              <span>Phone</span>
-              <input name="phone" type="tel" required autocomplete="tel" />
-            </label>
-            <label>
-              <span>Message or Interest</span>
-              <textarea name="query" required></textarea>
-            </label>
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="button" class="btn btn-ghost" id="clearForm">Clear</button>
-            </div>
-          </form>
-        </div>
+          </div>
+          <label>
+            <span>Phone</span>
+            <input name="phone" type="tel" required autocomplete="tel" placeholder="+91 XXXXX XXXXX" />
+          </label>
+          <label>
+            <span>Message</span>
+            <textarea name="query" required placeholder="Tell us about your goals or how we can help..." rows="4"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button type="button" class="btn btn-ghost" id="clearForm">Clear</button>
+          </div>
+        </form>
       </div>
     </section>
   </main>
@@ -93,6 +98,6 @@
     </div>
     <div class="legal">© <span id="year"></span> MentorMuni. All rights reserved.</div>
   </footer>
-  <script src="main.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

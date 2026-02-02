@@ -6,8 +6,8 @@
 (function () {
   'use strict';
 
-  // Configure your API base URL (Railway, etc.)
-  const API_BASE = window.MENTORMUNI_API_BASE || 'https://mentormuni-api.railway.app';
+  // API base URL — MentorMuni on Railway
+  const API_BASE = window.MENTORMUNI_API_BASE || 'https://web-production-ffcf6.up.railway.app';
 
   const state = {
     step: 0,

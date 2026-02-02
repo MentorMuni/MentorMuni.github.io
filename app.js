@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Network Error:", err);
         alert("❗ Network error — please try again.");
       } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Get Counselling"; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Send Message"; }
       }
     });
 
