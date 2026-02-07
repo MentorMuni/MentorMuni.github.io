@@ -129,8 +129,8 @@ img.logo,
   box-shadow:0 6px 20px rgba(79,70,229,0.35);
 }
 .btn-primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 28px rgba(6,182,212,0.5);
+  transform:translateY(-2px) scale(1.02);
+  box-shadow:0 10px 28px rgba(6,182,212,0.5), 0 0 24px rgba(79,70,229,0.2);
 }
 
 .btn-outline{
@@ -163,6 +163,14 @@ img.logo,
   grid-template-columns:1fr 480px;
   gap:48px;
   align-items:center;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(79,70,229,0.08) 0%, transparent 60%);
+  pointer-events: none;
 }
 .hero-visual-clean {
   width: 100%;
@@ -220,6 +228,11 @@ img.logo,
 .hero-interview-cta {
   margin: 20px 0 24px;
 }
+.hero-trust-line {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
 .hero-interview-card {
   display: inline-flex;
   flex-wrap: wrap;
@@ -229,6 +242,7 @@ img.logo,
   background: linear-gradient(135deg, rgba(79,70,229,0.25), rgba(6,182,212,0.2));
   border: 2px solid rgba(79,70,229,0.4);
   border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.04);
   box-shadow: 0 8px 32px rgba(79,70,229,0.25);
 }
 .hero-interview-card h3 {

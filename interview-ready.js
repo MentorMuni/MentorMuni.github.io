@@ -33,6 +33,8 @@
     elements.progressText = document.getElementById('irProgressText');
     elements.progressFill = document.getElementById('irProgressFill');
     elements.evalSubmit = document.getElementById('irEvalSubmit');
+    elements.stickyCta = document.getElementById('irStickyCta');
+    elements.stickySubmit = document.getElementById('irStickySubmit');
     elements.loadingPlan = document.getElementById('irLoadingPlan');
     elements.loadingEval = document.getElementById('irLoadingEval');
     elements.errorPlan = document.getElementById('irErrorPlan');
@@ -46,6 +48,11 @@
     elements.shareScore = document.getElementById('irShareScore');
     elements.copyLinkBtn = document.getElementById('irCopyLink');
     elements.retakeBtn = document.getElementById('irRetakeBtn');
+    elements.scoreCircle = document.getElementById('irScoreCircle');
+    elements.scoreBadgeWrap = document.getElementById('irScoreBadgeWrap');
+    elements.confettiWrap = document.getElementById('irConfettiWrap');
+    elements.shareCard = document.getElementById('irShareCard');
+    elements.downloadCardBtn = document.getElementById('irDownloadCard');
   }
 
   function parseApiError(res, data) {
@@ -146,6 +153,67 @@
     const div = document.createElement('div');
     div.textContent = s;
     return div.innerHTML;
+  }
+
+  function showConfetti() {
+    const wrap = elements.confettiWrap;
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    const colors = ['#4F46E5', '#06B6D4', '#10B981', '#F59E0B', '#EC4899'];
+    for (let i = 0; i < 50; i++) {
+      const p = document.createElement('div');
+      p.className = 'ir-confetti-particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDelay = (Math.random() * 0.5) + 's';
+      p.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.width = (6 + Math.random() * 8) + 'px';
+      p.style.height = (6 + Math.random() * 8) + 'px';
+      wrap.appendChild(p);
+    }
+    setTimeout(() => { wrap.innerHTML = ''; }, 3500);
+  }
+
+  function generateScoreCardImage(pct, label) {
+    const w = 400;
+    const h = 240;
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+
+    const bg = ctx.createLinearGradient(0, 0, w, h);
+    bg.addColorStop(0, '#1E293B');
+    bg.addColorStop(1, '#0f172a');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.strokeStyle = 'rgba(79,70,229,0.5)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(4, 4, w - 8, h - 8);
+
+    ctx.fillStyle = '#06B6D4';
+    ctx.font = 'bold 12px Inter, system-ui, sans-serif';
+    ctx.fillText('MENTORMUNI', 24, 40);
+
+    const scoreGrad = ctx.createLinearGradient(0, 0, w, 0);
+    scoreGrad.addColorStop(0, '#4F46E5');
+    scoreGrad.addColorStop(1, '#06B6D4');
+    ctx.fillStyle = scoreGrad;
+    ctx.font = 'bold 48px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(pct + '%', w / 2, 120);
+
+    ctx.fillStyle = '#94A3B8';
+    ctx.font = '14px Inter, system-ui, sans-serif';
+    ctx.fillText(label || 'Interview Readiness', w / 2, 150);
+
+    ctx.fillStyle = '#06B6D4';
+    ctx.font = '12px Inter, system-ui, sans-serif';
+    ctx.fillText('Try your free check → mentormuni.com', w / 2, 200);
+
+    return canvas.toDataURL('image/png');
   }
 
   async function onSubmitProfile(e) {
@@ -261,6 +329,7 @@
     if (elements.progressText) elements.progressText.textContent = `${answered} of ${total} answered`;
     if (elements.progressFill) elements.progressFill.style.width = total ? `${(answered / total) * 100}%` : '0%';
     if (elements.evalSubmit) elements.evalSubmit.disabled = answered !== total;
+    if (elements.stickySubmit) elements.stickySubmit.disabled = answered !== total;
   }
 
   async function onSubmitEval(e) {
@@ -307,16 +376,21 @@
     if (!r) return;
 
     const pct = Number(r.readiness_percentage) || 0;
+    const label = r.readiness_label || '—';
     const circumference = 2 * Math.PI * 54;
     const offset = circumference - (pct / 100) * circumference;
 
+    if (elements.scoreCircle) elements.scoreCircle.classList.add('ir-animate');
     if (elements.scoreFill) {
       elements.scoreFill.style.strokeDasharray = circumference;
       elements.scoreFill.style.strokeDashoffset = offset;
     }
     if (elements.scoreValue) elements.scoreValue.textContent = pct + '%';
-    if (elements.scoreLabel) elements.scoreLabel.textContent = r.readiness_label || '—';
+    if (elements.scoreLabel) elements.scoreLabel.textContent = label;
     if (elements.shareScore) elements.shareScore.textContent = pct + '%';
+
+    if (elements.scoreBadgeWrap) elements.scoreBadgeWrap.hidden = pct < 90;
+    if (pct >= 80) setTimeout(showConfetti, 300);
 
     const strengths = Array.isArray(r.strengths) ? r.strengths : [];
     const gaps = Array.isArray(r.gaps) ? r.gaps : [];
@@ -343,16 +417,42 @@
         : '<p class="ir-muted">Complete the check to see your personalized roadmap.</p>';
     }
 
-    const shareUrl = window.location.href;
-    const shareText = encodeURIComponent(`I just checked my interview readiness on MentorMuni – scored ${pct}%! 🚀`);
+    const origin = window.location.origin || 'https://mentormuni.com';
+    const shareUrl = origin + '/interview-ready.html?utm_source=share&utm_medium=social&utm_campaign=interview_ready';
+    const shareText = encodeURIComponent(`I scored ${pct}% on MentorMuni's Interview Readiness Check. Can you beat it? Try free → ${shareUrl} 🚀`);
     document.querySelector('.ir-share-whatsapp')?.setAttribute('href', `https://wa.me/?text=${shareText}`);
     document.querySelector('.ir-share-linkedin')?.setAttribute('href', `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`);
 
+    const cardScore = document.getElementById('irShareCardScore');
+    const cardLabel = document.getElementById('irShareCardLabel');
+    if (cardScore) cardScore.textContent = pct + '%';
+    if (cardLabel) cardLabel.textContent = label;
+
+    const copyText = `I scored ${pct}% on MentorMuni's Interview Readiness Check. Can you beat it? Try free → ${shareUrl} 🚀`;
     if (elements.copyLinkBtn) {
       elements.copyLinkBtn.replaceWith(elements.copyLinkBtn.cloneNode(true));
-      document.getElementById('irCopyLink')?.addEventListener('click', () => {
-        navigator.clipboard?.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => {});
-      });
+      const copyBtn = document.getElementById('irCopyLink');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard?.writeText(copyText).then(() => {
+            copyBtn.classList.add('ir-copied');
+            setTimeout(() => copyBtn.classList.remove('ir-copied'), 2000);
+          }).catch(() => {});
+        });
+      }
+    }
+
+    const downloadBtn = document.getElementById('irDownloadCard');
+    if (downloadBtn) {
+      downloadBtn.onclick = () => {
+        const dataUrl = generateScoreCardImage(pct, label);
+        if (dataUrl) {
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          a.download = `mentormuni-readiness-${pct}percent.png`;
+          a.click();
+        }
+      };
     }
   }
 
@@ -397,10 +497,6 @@
           elements.evalSubmit?.removeAttribute('disabled');
         }
       });
-    });
-
-    document.getElementById('irCopyLink')?.addEventListener('click', () => {
-      navigator.clipboard?.writeText(window.location.href).then(() => alert('Link copied!')).catch(() => {});
     });
   }
 

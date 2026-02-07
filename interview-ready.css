@@ -23,16 +23,16 @@
   padding: 24px 0 48px;
 }
 
-/* Step visibility */
+/* Step visibility – fade + slide */
 .ir-step {
   display: none;
-  animation: irFadeIn 0.35s ease-out;
+  animation: irFadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 .ir-step.active {
   display: block;
 }
 @keyframes irFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -42,14 +42,14 @@
   padding: 0 20px;
 }
 
-/* Landing card */
+/* Landing card – layered floating feel */
 .ir-landing-card {
   background: linear-gradient(135deg, #1E293B 0%, #151c23 100%);
   border: 1.5px solid rgba(79,70,229,0.2);
   border-radius: 24px;
   padding: 40px 28px;
   text-align: center;
-  box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2), 0 16px 48px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.04);
 }
 
 .ir-headline {
@@ -125,22 +125,28 @@
   padding: 16px 28px;
   font-size: 17px;
   min-width: 260px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.ir-cta-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 32px rgba(79,70,229,0.45);
 }
 
-/* Form card */
+/* Form card – layered depth */
 .ir-card {
   background: linear-gradient(135deg, #1E293B 0%, #151c23 100%);
   border: 1.5px solid rgba(79,70,229,0.15);
   border-radius: 20px;
   padding: 32px 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2), 0 12px 40px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.03);
 }
 
 .ir-card h2 {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 26px;
+  font-weight: 800;
   color: var(--ir-text);
   margin-bottom: 6px;
+  letter-spacing: -0.02em;
 }
 
 .ir-card-sub {
@@ -229,12 +235,15 @@
   border: 1px solid rgba(255,255,255,0.08);
   color: #fff;
   font-size: 15px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .ir-field input:focus,
 .ir-field select:focus {
   outline: none;
   border-color: rgba(79,70,229,0.5);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.2), 0 0 0 3px rgba(79,70,229,0.15);
 }
 
 .ir-optional {
@@ -318,6 +327,7 @@
   background: var(--ir-gradient);
   border-radius: 3px;
   width: 0%;
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transition: width 0.3s ease;
 }
 
@@ -354,6 +364,7 @@
   border-radius: 10px;
   font-weight: 600;
   font-size: 15px;
+  transition: all 0.2s ease;
   cursor: pointer;
   border: 1.5px solid rgba(255,255,255,0.15);
   background: transparent;
@@ -362,9 +373,10 @@
 }
 
 .ir-yesno-btn:hover {
-  border-color: rgba(79,70,229,0.4);
+  border-color: rgba(79,70,229,0.5);
   color: #fff;
-  background: rgba(79,70,229,0.1);
+  background: rgba(79,70,229,0.12);
+  box-shadow: 0 0 20px rgba(79,70,229,0.25);
 }
 
 .ir-yesno-btn.selected-yes {
@@ -429,6 +441,12 @@
 .ir-loading-title {
   font-size: 17px;
   color: var(--ir-muted);
+  margin: 0 0 8px;
+}
+.ir-loading-sub {
+  font-size: 14px;
+  color: var(--ir-muted);
+  opacity: 0.9;
   margin: 0 0 28px;
 }
 
@@ -487,16 +505,28 @@
 }
 
 .ir-spinner {
-  width: 40px;
-  height: 40px;
-  margin: 0 auto;
-  border: 3px solid rgba(79,70,229,0.2);
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 24px;
+  border: 4px solid rgba(79,70,229,0.15);
   border-top-color: var(--ir-primary);
+  border-right-color: var(--ir-accent);
   border-radius: 50%;
-  animation: irSpin 0.8s linear infinite;
+  animation: irSpin 0.7s linear infinite;
 }
 @keyframes irSpin {
   to { transform: rotate(360deg); }
+}
+.ir-loading-message {
+  font-size: 15px;
+  color: var(--ir-muted);
+  margin: 0 0 8px;
+  min-height: 1.4em;
+}
+.ir-loading-message-sub {
+  font-size: 13px;
+  color: var(--ir-muted);
+  opacity: 0.85;
 }
 
 /* Results */
@@ -505,21 +535,44 @@
   border: 1.5px solid rgba(79,70,229,0.2);
   border-radius: 24px;
   padding: 36px 24px;
-  box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2), 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04);
 }
 
 .ir-results-card h2 {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--ir-text);
   text-align: center;
   margin-bottom: 28px;
+  letter-spacing: -0.02em;
 }
 
 .ir-score-section {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-bottom: 32px;
+}
+.ir-score-badge-wrap {
+  margin-top: 12px;
+}
+.ir-score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(79,70,229,0.25), rgba(6,182,212,0.2));
+  border: 1px solid rgba(79,70,229,0.4);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ir-accent);
+  animation: irBadgePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+}
+@keyframes irBadgePop {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .ir-score-circle {
@@ -546,7 +599,7 @@
   stroke-linecap: round;
   stroke-dasharray: 339.3;
   stroke-dashoffset: 339.3;
-  transition: stroke-dashoffset 0.8s ease-out;
+  transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .ir-score-content {
@@ -690,7 +743,57 @@
   font-size: 16px;
   font-weight: 700;
   color: var(--ir-text);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+}
+
+.ir-share-hint {
+  font-size: 13px;
+  color: var(--ir-muted);
+  margin-bottom: 16px;
+}
+
+.ir-share-card {
+  max-width: 320px;
+  margin: 0 auto 20px;
+  padding: 24px;
+  background: linear-gradient(135deg, #1E293B 0%, #0f172a 100%);
+  border: 2px solid rgba(79,70,229,0.4);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.ir-share-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.ir-share-card-brand {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ir-accent);
+}
+
+.ir-share-card-score {
+  font-size: 42px;
+  font-weight: 800;
+  background: var(--ir-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ir-share-card-label {
+  font-size: 14px;
+  color: var(--ir-muted);
+}
+
+.ir-share-card-cta {
+  font-size: 12px;
+  color: var(--ir-accent);
+  margin-top: 4px;
 }
 
 .ir-share-copy {
@@ -733,8 +836,42 @@
   color: #0A66C2;
 }
 
+.ir-share-download:hover {
+  border-color: var(--ir-accent);
+  color: var(--ir-accent);
+}
+
 .ir-results-actions {
   margin-top: 16px;
+}
+
+/* Confetti overlay */
+.ir-confetti-wrap {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  overflow: hidden;
+}
+.ir-confetti-particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: irConfettiFall 2.5s ease-out forwards;
+}
+@keyframes irConfettiFall {
+  0% { opacity: 1; transform: translateY(-10px) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+}
+
+/* Copy button feedback */
+.ir-share-btn.ir-copied {
+  border-color: var(--ir-success);
+  color: var(--ir-success);
+}
+.ir-share-btn.ir-copied::before {
+  content: '✓ ';
 }
 
 /* Responsive */
@@ -789,4 +926,27 @@
   .ir-main .nav-toggle {
     display: block;
   }
+}
+
+/* Sticky CTA – mobile only on questions step */
+.ir-sticky-cta {
+  display: none;
+}
+@media (max-width: 768px) {
+  .ir-step-2.active .ir-sticky-cta {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 20px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    background: rgba(15,20,25,0.98);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    z-index: 50;
+  }
+  .ir-sticky-cta .ir-sticky-btn {
+    width: 100%;
+  }
+  .ir-step-2.active .ir-form-actions { padding-bottom: 72px; }
 }

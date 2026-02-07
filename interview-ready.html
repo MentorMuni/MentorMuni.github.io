@@ -3,9 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Am I Interview Ready? | MentorMuni</title>
-  <meta name="description" content="Check your interview readiness in 5 minutes – FREE. AI-powered readiness check based on your role & experience. No resume upload required." />
+  <title>Am I Interview Ready? Free 5-Min Check | MentorMuni</title>
+  <meta name="description" content="Check your interview readiness in 5 minutes – FREE. AI-powered readiness check for 3rd year, 4th year students & working professionals. No resume upload required." />
+  <link rel="canonical" href="https://mentormuni.com/interview-ready.html" />
+  <meta property="og:title" content="Am I Interview Ready? Free 5-Min Check | MentorMuni">
+  <meta property="og:description" content="Check your interview readiness in 5 minutes – FREE. AI-powered. No resume upload. Get your score & roadmap.">
+  <meta property="og:url" content="https://mentormuni.com/interview-ready.html">
+  <meta property="og:image" content="https://mentormuni.com/assets/hero-brand-banner.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Am I Interview Ready? Free 5-Min Check">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Interview Readiness Check","applicationCategory":"EducationalApplication","url":"https://mentormuni.com/interview-ready.html","description":"Free AI-powered interview readiness check for students and professionals. Get your score and personalized roadmap in 5 minutes."}
+  </script>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="interview-ready.css">
 </head>
@@ -156,11 +168,12 @@
           </div>
           <div class="ir-spinner"></div>
           <p class="ir-loading-title">Generating your personalized questions...</p>
+          <p class="ir-loading-sub">AI is building your custom readiness plan</p>
           <div class="ir-loading-promo">
             <p class="ir-loading-promo-head">While you wait</p>
             <p class="ir-loading-promo-text">For <strong>3rd year, 4th year students & working professionals</strong> — MentorMuni AI Mock Interview: realistic practice, instant feedback & personalized coaching.</p>
             <p class="ir-loading-promo-price">Just <strong>₹1,000</strong> for full access</p>
-            <a href="contact.html" class="btn btn-outline ir-loading-promo-btn">Learn more</a>
+            <a href="contact.html?utm_source=interview_ready&utm_medium=loading" class="btn btn-outline ir-loading-promo-btn">Learn more</a>
           </div>
         </div>
       </div>
@@ -168,6 +181,9 @@
 
     <!-- STEP 3: Questions -->
     <section class="ir-step ir-step-2" data-step="3">
+      <div class="ir-sticky-cta" id="irStickyCta" aria-hidden="true">
+        <button type="submit" form="irEvalForm" class="btn btn-primary ir-sticky-btn" id="irStickySubmit" disabled>See My Results</button>
+      </div>
       <div class="container ir-container">
         <div class="ir-card">
           <h2>Answer these questions</h2>
@@ -198,10 +214,11 @@
             <p class="ir-loading-tagline">AI-powered interview preparation</p>
           </div>
           <div class="ir-spinner"></div>
-          <p class="ir-loading-title">Evaluating your readiness...</p>
+          <p class="ir-loading-title">AI is analyzing your answers...</p>
+          <p class="ir-loading-sub">Almost there — calculating your readiness score</p>
           <div class="ir-loading-promo">
             <p class="ir-loading-promo-text">For 3rd year, 4th year students & working professionals: <strong>MentorMuni AI Mock Interview</strong> — ₹1,000 for full access</p>
-            <a href="contact.html" class="btn btn-outline ir-loading-promo-btn">Learn more</a>
+            <a href="contact.html?utm_source=interview_ready&utm_medium=loading" class="btn btn-outline ir-loading-promo-btn">Learn more</a>
           </div>
         </div>
       </div>
@@ -209,6 +226,7 @@
 
     <!-- STEP 5: Results -->
     <section class="ir-step ir-step-3" data-step="5">
+      <div class="ir-confetti-wrap" id="irConfettiWrap" aria-hidden="true"></div>
       <div class="container ir-container">
         <div class="ir-results-card">
           <h2>Your Interview Readiness</h2>
@@ -229,6 +247,9 @@
                 <span class="ir-score-label" id="irScoreLabel">—</span>
               </div>
             </div>
+            <div class="ir-score-badge-wrap" id="irScoreBadgeWrap" hidden>
+              <span class="ir-score-badge">🏆 Top 10% Readiness</span>
+            </div>
           </div>
           <div class="ir-strengths" id="irStrengths">
             <h3><span class="ir-icon ir-icon-success">✓</span> Strengths</h3>
@@ -245,17 +266,27 @@
           <div class="ir-cta-section">
             <h3>Next steps</h3>
             <div class="ir-cta-buttons">
-              <a href="courses.html" class="btn btn-primary">Start Learning with MentorMuni</a>
-              <a href="contact.html" class="btn btn-outline">Try AI Mock Interview</a>
+              <a href="courses.html?utm_source=interview_ready&utm_medium=results" class="btn btn-primary">Start Learning with MentorMuni</a>
+              <a href="contact.html?utm_source=interview_ready&utm_medium=results" class="btn btn-outline">Try AI Mock Interview</a>
             </div>
           </div>
           <div class="ir-share-section">
             <h3>Share your readiness score</h3>
-            <p class="ir-share-copy">"I just checked my interview readiness on MentorMuni – scored <strong id="irShareScore">0%</strong>! 🚀"</p>
+            <p class="ir-share-hint ir-share-nudge">Know someone preparing for placements? Help a friend — share and challenge them to beat your score!</p>
+            <div class="ir-share-card" id="irShareCard">
+              <div class="ir-share-card-inner">
+                <span class="ir-share-card-brand">MentorMuni</span>
+                <span class="ir-share-card-score" id="irShareCardScore">0%</span>
+                <span class="ir-share-card-label" id="irShareCardLabel">—</span>
+                <span class="ir-share-card-cta">Try your free check → mentormuni.com</span>
+              </div>
+            </div>
+            <p class="ir-share-copy">"I scored <strong id="irShareScore">0%</strong> on MentorMuni's Interview Readiness Check. Can you beat it? 🚀"</p>
             <div class="ir-share-buttons">
               <a class="btn ir-share-btn ir-share-whatsapp" href="#" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WhatsApp</a>
               <a class="btn ir-share-btn ir-share-linkedin" href="#" target="_blank" rel="noopener" aria-label="Share on LinkedIn">LinkedIn</a>
               <button type="button" class="btn ir-share-btn ir-share-copy" id="irCopyLink" aria-label="Copy link">Copy link</button>
+              <button type="button" class="btn ir-share-btn ir-share-download" id="irDownloadCard" aria-label="Download score card">Download card</button>
             </div>
           </div>
           <div class="ir-form-actions ir-results-actions">
