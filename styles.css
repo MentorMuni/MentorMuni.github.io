@@ -1335,8 +1335,10 @@ input:focus, select:focus, textarea:focus {
 
 /* Contact/kickstart */
 .section-contact .contact-form { background: #181e2e; border-radius:17px; box-shadow:0 3px 32px #44c7e723; padding:32px; }
-.section-contact .cf-field-error { display: block; font-size: 13px; color: #F59E0B; margin-top: 6px; min-height: 1.2em; }
-.section-contact .cf-field.has-error input { border-color: rgba(245, 158, 11, 0.6); }
+.section-contact .cf-field-error,
+.contact-form-card .cf-field-error { display: block; font-size: 13px; color: #F59E0B; margin-top: 6px; min-height: 1.2em; }
+.section-contact .cf-field.has-error input,
+.contact-form-card .cf-field.has-error input { border-color: rgba(245, 158, 11, 0.6); }
 .section-contact .contact-right ul li { margin:9px 0; font-size:16px; list-style:none; position:relative; }
 .section-contact .contact-right ul li:before { content:'✅'; margin-right:8px; }
 @media (max-width:900px) {

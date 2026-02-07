@@ -3,6 +3,8 @@
 // Modern UI • Smooth UX • Error-proof
 // ============================
 
+const API_BASE = window.MENTORMUNI_API_BASE || "https://web-production-ffcf6.up.railway.app";
+
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ------------------------------
@@ -82,34 +84,46 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!valid) return;
 
       const submitBtn = contactForm.querySelector("button[type='submit']");
+      const originalBtnText = submitBtn?.textContent || "Submit";
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Submitting..."; }
 
-      const formData = new FormData(contactForm);
-      const data = Object.fromEntries(formData.entries());
+      const nameVal = (contactForm.querySelector("[name='name']")?.value || "").trim();
+      const emailVal = (contactForm.querySelector("[name='email']")?.value || "").trim();
+      const phoneVal = (contactForm.querySelector("[name='phone']")?.value || "").trim();
+      const queryVal = (contactForm.querySelector("[name='query']")?.value || "").trim();
+      const courseVal = (contactForm.querySelector("[name='course']")?.value || "").trim();
 
-      // TODO: replace with your deployed Google Apps Script Web App URL
-      const GAS_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+      const payload = {
+        name: nameVal,
+        email: emailVal,
+        phone: phoneVal,
+        year: null,
+        message: queryVal || (courseVal ? "Course interested: " + courseVal : null)
+      };
 
       try {
-        const res = await fetch(GAS_URL, {
+        const res = await fetch(`${API_BASE}/contact/submit`, {
           method: "POST",
-          body: JSON.stringify(data),
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
         });
 
+        const data = await res.json().catch(() => ({}));
+
         if (res.ok) {
-          alert("🎉 Thank you! A MentorMuni counselor will reach out shortly.");
+          alert(data.message || "Thank you! We'll get back to you.");
           contactForm.reset();
         } else {
-          console.warn('Response not OK', res.status);
-          alert("⚠️ Submission failed. Please email us at hello@mentormuni.com");
+          const errMsg = Array.isArray(data.detail)
+            ? data.detail.map((d) => (typeof d === "string" ? d : d.msg || "")).filter(Boolean).join(". ") || data.detail
+            : typeof data.detail === "string" ? data.detail : "Submission failed. Please try again.";
+          alert(res.status === 429 ? "Too many requests. Please wait a moment." : errMsg);
         }
-
       } catch (err) {
         console.error("Network Error:", err);
-        alert("❗ Network error — please try again.");
+        alert("Network error — please try again.");
       } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Send Message"; }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalBtnText; }
       }
     });
 

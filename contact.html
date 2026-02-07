@@ -49,24 +49,27 @@
       </div>
       <div class="contact-form-card">
         <h3>Send a Message</h3>
-        <form id="contactForm" class="contact-form" aria-label="Contact form">
+        <form id="contactForm" class="contact-form" aria-label="Contact form" novalidate>
           <div class="contact-form-row">
-            <label>
+            <label class="cf-field" id="cfFieldName">
               <span>Full name</span>
-              <input name="name" type="text" required autocomplete="name" placeholder="Your name" />
+              <input name="name" type="text" autocomplete="name" placeholder="Your name" />
+              <span class="cf-field-error" id="cfErrorName" aria-live="polite"></span>
             </label>
-            <label>
+            <label class="cf-field" id="cfFieldEmail">
               <span>Email</span>
-              <input name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+              <input name="email" type="email" autocomplete="email" placeholder="you@example.com" />
+              <span class="cf-field-error" id="cfErrorEmail" aria-live="polite"></span>
             </label>
           </div>
-          <label>
+          <label class="cf-field" id="cfFieldPhone">
             <span>Phone</span>
-            <input name="phone" type="tel" required autocomplete="tel" placeholder="+91 XXXXX XXXXX" />
+            <input name="phone" type="tel" autocomplete="tel" placeholder="+91 XXXXX XXXXX" />
+            <span class="cf-field-error" id="cfErrorPhone" aria-live="polite"></span>
           </label>
           <label>
             <span>Message</span>
-            <textarea name="query" required placeholder="Tell us about your goals or how we can help..." rows="4"></textarea>
+            <textarea name="query" placeholder="Tell us about your goals or how we can help..." rows="4"></textarea>
           </label>
           <div class="form-actions">
             <button type="submit" class="btn btn-primary">Send Message</button>
@@ -97,6 +100,9 @@
     </div>
     <div class="legal">© <span id="year"></span> MentorMuni. All rights reserved.</div>
   </footer>
+  <script>
+    window.MENTORMUNI_API_BASE = window.MENTORMUNI_API_BASE || "https://web-production-ffcf6.up.railway.app";
+  </script>
   <script src="app.js"></script>
 </body>
 </html>

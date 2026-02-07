@@ -1,12 +1,11 @@
 /**
- * Am I Interview Ready? — Feature Logic
- * API: POST /interview-ready/plan, POST /interview-ready/evaluate
+ * Am I Interview Ready? — API integration
+ * POST /interview-ready/plan, POST /interview-ready/evaluate
  */
 
 (function () {
   'use strict';
 
-  // API base URL — MentorMuni on Railway
   const API_BASE = window.MENTORMUNI_API_BASE || 'https://web-production-ffcf6.up.railway.app';
 
   const state = {
@@ -19,59 +18,7 @@
     result: null,
   };
 
-  const elements = {
-    steps: null,
-    startBtn: null,
-    statsCount: null,
-    profileForm: null,
-    expField: null,
-    evalForm: null,
-    questionsContainer: null,
-    progressText: null,
-    progressFill: null,
-    evalSubmit: null,
-    loadingPlan: null,
-    loadingEval: null,
-    errorPlan: null,
-    errorEval: null,
-    scoreFill: null,
-    scoreValue: null,
-    scoreLabel: null,
-    strengthsList: null,
-    gapsList: null,
-    roadmapList: null,
-    shareScore: null,
-    copyLinkBtn: null,
-    retakeBtn: null,
-  };
-
-  function init() {
-    cacheElements();
-    bindEvents();
-    hideExpFieldByDefault();
-    fetchStats();
-    trackPageView();
-  }
-
-  function trackPageView() {
-    fetch(`${API_BASE}/interview-ready/track`, { method: 'POST' }).catch(() => {});
-  }
-
-  async function fetchStats() {
-    try {
-      const res = await fetch(`${API_BASE}/interview-ready/stats`);
-      if (!res.ok) return;
-      const data = await res.json();
-      const checks = Number(data.total_checks) || 0;
-      const views = Number(data.total_views) || 0;
-      const n = checks || views;
-      if (elements.statsCount) {
-        elements.statsCount.textContent = n > 0 ? n.toLocaleString() : '—';
-      }
-    } catch {
-      if (elements.statsCount) elements.statsCount.textContent = '—';
-    }
-  }
+  const elements = {};
 
   function cacheElements() {
     elements.steps = document.querySelectorAll('.ir-step');
@@ -101,46 +48,41 @@
     elements.retakeBtn = document.getElementById('irRetakeBtn');
   }
 
-  function bindEvents() {
-    if (elements.startBtn) elements.startBtn.addEventListener('click', () => goToStep(1));
-    if (elements.profileForm) elements.profileForm.addEventListener('submit', onSubmitProfile);
-    if (elements.evalForm) elements.evalForm.addEventListener('submit', onSubmitEval);
-    if (elements.retakeBtn) elements.retakeBtn.addEventListener('click', onRetake);
+  function parseApiError(res, data) {
+    if (res.status === 429) return "Too many requests. Please wait a moment.";
+    if (res.status === 504) return "Request timed out. Please try again.";
+    if (res.status === 500) return "Something went wrong. Please try again.";
+    if (data.detail) {
+      if (Array.isArray(data.detail)) {
+        return data.detail.map(d => typeof d === 'string' ? d : (d.msg || JSON.stringify(d))).join('. ');
+      }
+      return String(data.detail);
+    }
+    return data.message || "Request failed.";
+  }
 
-    document.querySelectorAll('.ir-back-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
-        const back = parseInt(this.dataset.back, 10);
-        goToStep(back);
-      });
-    });
+  function init() {
+    cacheElements();
+    bindEvents();
+    hideExpFieldByDefault();
+    fetchStats();
+    trackPageView();
+  }
 
-    document.querySelectorAll('.ir-radio input[name="currentStatus"]').forEach(radio => {
-      radio.addEventListener('change', onStatusChange);
-    });
+  function trackPageView() {
+    fetch(`${API_BASE}/interview-ready/track`, { method: 'POST' }).catch(() => {});
+  }
 
-    document.getElementById('irProfileForm')?.addEventListener('change', function () {
-      clearProfileErrors();
-      onStatusChange();
-    });
-    document.getElementById('irProfileForm')?.addEventListener('input', clearProfileErrors);
-    onStatusChange();
-
-    document.querySelectorAll('.ir-retry-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
-        const err = this.closest('.ir-error');
-        if (err?.id === 'irErrorPlan') {
-          showLoadingPlan(false);
-          showErrorPlan(false);
-          elements.profileForm?.querySelector('button[type="submit"]')?.removeAttribute('disabled');
-        } else if (err?.id === 'irErrorEval') {
-          showLoadingEval(false);
-          showErrorEval(false);
-          elements.evalSubmit?.removeAttribute('disabled');
-        }
-      });
-    });
-
-    if (elements.copyLinkBtn) elements.copyLinkBtn.addEventListener('click', onCopyLink);
+  async function fetchStats() {
+    try {
+      const res = await fetch(`${API_BASE}/interview-ready/stats`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const n = Number(data.total_checks) || Number(data.total_views) || 0;
+      if (elements.statsCount) elements.statsCount.textContent = n > 0 ? n.toLocaleString() : '—';
+    } catch {
+      if (elements.statsCount) elements.statsCount.textContent = '—';
+    }
   }
 
   function hideExpFieldByDefault() {
@@ -150,54 +92,68 @@
   }
 
   function onStatusChange() {
-    const checked = document.querySelector('input[name="currentStatus"]:checked')?.value;
-    const professional = checked === 'professional';
-    const isStudent = checked === '3rd_year' || checked === '4th_year';
-
-    if (elements.expField) {
-      elements.expField.classList.toggle('visible', professional);
-      elements.expField.querySelector('select')?.toggleAttribute('required', professional);
-    }
-    if (elements.placementField) {
-      elements.placementField.classList.toggle('visible', isStudent);
-      elements.placementField.querySelector('select')?.toggleAttribute('required', isStudent);
-    }
-    if (elements.targetRoleField) {
-      elements.targetRoleField.classList.toggle('visible', professional);
-      elements.targetRoleField.querySelector('select')?.toggleAttribute('required', professional);
-    }
+    const status = document.querySelector('input[name="currentStatus"]:checked')?.value;
+    const professional = status === 'professional';
+    const isStudent = status === '3rd_year' || status === '4th_year';
+    if (elements.expField) elements.expField.classList.toggle('visible', professional);
+    if (elements.placementField) elements.placementField.classList.toggle('visible', isStudent);
+    if (elements.targetRoleField) elements.targetRoleField.classList.toggle('visible', professional);
   }
 
   function goToStep(step) {
     state.step = step;
-    elements.steps?.forEach((el, i) => {
-      el.classList.toggle('active', i === step);
-    });
+    elements.steps?.forEach((el, i) => el.classList.toggle('active', i === step));
     if (step === 2 && state.questions.length) {
       renderQuestions();
       updateProgress();
     }
-    if (step === 3 && state.result) {
-      renderResults();
-    }
+    if (step === 3 && state.result) renderResults();
   }
 
   function clearProfileErrors() {
-    ['irErrorStatus', 'irErrorTechStack', 'irErrorPlacement', 'irErrorRole'].forEach(id => {
+    ['irErrorStatus', 'irErrorTechStack', 'irErrorEmail', 'irErrorPhone', 'irErrorPlacement', 'irErrorRole'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.textContent = '';
     });
-    ['irFieldsetStatus', 'irFieldTechStack', 'irPlacementField', 'irTargetRoleField'].forEach(id => {
+    ['irFieldsetStatus', 'irFieldTechStack', 'irFieldEmail', 'irFieldPhone', 'irPlacementField', 'irTargetRoleField'].forEach(id => {
       document.getElementById(id)?.classList.remove('has-error');
     });
   }
 
   function showFieldError(errorId, msg) {
-    const errEl = document.getElementById(errorId);
-    if (errEl) errEl.textContent = msg;
-    const fieldMap = { irErrorStatus: 'irFieldsetStatus', irErrorTechStack: 'irFieldTechStack', irErrorPlacement: 'irPlacementField', irErrorRole: 'irTargetRoleField' };
-    const fieldId = fieldMap[errorId];
+    const el = document.getElementById(errorId);
+    if (el) el.textContent = msg;
+    const map = { irErrorStatus: 'irFieldsetStatus', irErrorTechStack: 'irFieldTechStack', irErrorEmail: 'irFieldEmail', irErrorPhone: 'irFieldPhone', irErrorPlacement: 'irPlacementField', irErrorRole: 'irTargetRoleField' };
+    const fieldId = map[errorId];
     if (fieldId) document.getElementById(fieldId)?.classList.add('has-error');
+  }
+
+  function showErrorPlan(show, msg) {
+    if (!elements.errorPlan) return;
+    elements.errorPlan.hidden = !show;
+    const p = elements.errorPlan.querySelector('.ir-error-msg');
+    if (p) p.textContent = msg || '';
+  }
+
+  function showErrorEval(show, msg) {
+    if (!elements.errorEval) return;
+    elements.errorEval.hidden = !show;
+    const p = elements.errorEval.querySelector('.ir-error-msg');
+    if (p) p.textContent = msg || '';
+  }
+
+  function showLoadingPlan(show) {
+    if (elements.loadingPlan) elements.loadingPlan.hidden = !show;
+  }
+
+  function showLoadingEval(show) {
+    if (elements.loadingEval) elements.loadingEval.hidden = !show;
+  }
+
+  function escapeHtml(s) {
+    const div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
   }
 
   async function onSubmitProfile(e) {
@@ -207,33 +163,19 @@
     const status = fd.get('currentStatus');
     const userType = status === 'professional' ? 'working professional' : 'student';
     const isStudent = userType === 'student';
-    const experienceYears = status === 'professional'
-      ? parseInt(fd.get('experience') || '0', 10)
-      : 0;
+    const experienceYears = status === 'professional' ? parseInt(fd.get('experience') || '0', 10) : 0;
     const primarySkill = (fd.get('primarySkill') || '').trim();
-    const targetRole = status === 'professional'
-      ? (fd.get('targetRole') || '').trim()
-      : (fd.get('placementType') || '').trim();
-    const email = (fd.get('email') || '').trim() || null;
-    const phone = (fd.get('phone') || '').trim() || null;
+    const targetRole = status === 'professional' ? (fd.get('targetRole') || '').trim() : (fd.get('placementType') || '').trim();
+    const email = (fd.get('email') || '').trim();
+    const phone = (fd.get('phone') || '').trim();
 
     let valid = true;
-    if (!status) {
-      showFieldError('irErrorStatus', 'This field is required');
-      valid = false;
-    }
-    if (!primarySkill) {
-      showFieldError('irErrorTechStack', 'This field is required');
-      valid = false;
-    }
-    if (isStudent && !targetRole) {
-      showFieldError('irErrorPlacement', 'This field is required');
-      valid = false;
-    }
-    if (!isStudent && !targetRole) {
-      showFieldError('irErrorRole', 'This field is required');
-      valid = false;
-    }
+    if (!status) { showFieldError('irErrorStatus', 'Required'); valid = false; }
+    if (!primarySkill) { showFieldError('irErrorTechStack', 'Required'); valid = false; }
+    if (!email) { showFieldError('irErrorEmail', 'Required'); valid = false; }
+    if (!phone) { showFieldError('irErrorPhone', 'Required'); valid = false; }
+    if (isStudent && !targetRole) { showFieldError('irErrorPlacement', 'Required'); valid = false; }
+    if (!isStudent && !targetRole) { showFieldError('irErrorRole', 'Required'); valid = false; }
     if (!valid) return;
 
     state.profile = { userType, experienceYears, primarySkill, targetRole, email, phone };
@@ -241,71 +183,60 @@
     showLoadingPlan(true);
     showErrorPlan(false);
 
+    const payload = {
+      user_type: userType,
+      experience_years: experienceYears,
+      primary_skill: primarySkill,
+      target_role: targetRole || undefined,
+      email: email || null,
+      phone: phone || null,
+    };
+
     try {
       const res = await fetch(`${API_BASE}/interview-ready/plan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          user_type: userType,
-          experience_years: experienceYears,
-          primary_skill: primarySkill,
-          target_role: targetRole,
-          email: email || undefined,
-          phone: phone || undefined,
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
+
       if (!res.ok) {
-        let msg = 'Request failed';
-        if (res.status === 429) msg = 'Too many requests. Please wait a moment and try again.';
-        else if (data.detail) {
-          msg = Array.isArray(data.detail)
-            ? data.detail.map((d) => (typeof d === 'string' ? d : d.msg || JSON.stringify(d))).join('. ')
-            : String(data.detail);
-        } else if (data.message) msg = data.message;
-        throw new Error(msg);
+        throw new Error(parseApiError(res, data));
       }
 
       const plan = Array.isArray(data.evaluation_plan) ? data.evaluation_plan : [];
-      state.questions = plan.map((item) =>
-        typeof item === 'string' ? item : (item && item.question ? item.question : String(item))
-      );
-      state.correctAnswers = plan.map((item) =>
-        typeof item === 'object' && item && item.correct_answer ? item.correct_answer : 'Yes'
-      );
-      state.studyTopics = plan.map((item) => {
-        if (typeof item === 'object' && item && item.study_topic && String(item.study_topic).trim()) {
-          return String(item.study_topic).trim();
-        }
-        const q = typeof item === 'string' ? item : (item && item.question) || '';
+      state.questions = plan.map(item => typeof item === 'string' ? item : (item?.question || String(item)));
+      state.correctAnswers = plan.map(item => (item && item.correct_answer) ? item.correct_answer : 'Yes');
+      state.studyTopics = plan.map(item => {
+        if (item && item.study_topic && String(item.study_topic).trim()) return String(item.study_topic).trim();
+        const q = typeof item === 'string' ? item : (item?.question || '');
         return q.length > 60 ? q.slice(0, 57) + '...' : q || 'Interview fundamentals';
       });
+
       if (state.questions.length === 0) {
         state.questions = ['Interview fundamentals'];
         state.correctAnswers = ['Yes'];
         state.studyTopics = ['Interview fundamentals'];
       }
+
       state.answers = {};
       fetchStats();
       goToStep(2);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      showErrorPlan(true, msg || 'Something went wrong. Please try again.');
+      showErrorPlan(true, err instanceof Error ? err.message : String(err));
     } finally {
       showLoadingPlan(false);
-      elements.profileForm?.querySelector('button[type="submit"]')?.removeAttribute('disabled');
+      elements.profileForm.querySelector('button[type="submit"]')?.removeAttribute('disabled');
     }
   }
 
   function renderQuestions() {
     if (!elements.questionsContainer) return;
     elements.questionsContainer.innerHTML = '';
-
     state.questions.forEach((q, i) => {
       const wrap = document.createElement('div');
       wrap.className = 'ir-question-item';
-      wrap.dataset.index = String(i);
       wrap.innerHTML = `
         <p class="ir-question-text">${escapeHtml(q)}</p>
         <div class="ir-yesno-buttons">
@@ -314,7 +245,6 @@
         </div>
       `;
       elements.questionsContainer.appendChild(wrap);
-
       wrap.querySelectorAll('.ir-yesno-btn').forEach(btn => {
         btn.addEventListener('click', function () {
           const idx = parseInt(this.dataset.index, 10);
@@ -333,13 +263,9 @@
   function updateProgress() {
     const total = state.questions.length;
     const answered = Object.keys(state.answers).length;
-    const allAnswered = answered === total;
-
     if (elements.progressText) elements.progressText.textContent = `${answered} of ${total} answered`;
     if (elements.progressFill) elements.progressFill.style.width = total ? `${(answered / total) * 100}%` : '0%';
-    if (elements.evalSubmit) {
-      elements.evalSubmit.disabled = !allAnswered;
-    }
+    if (elements.evalSubmit) elements.evalSubmit.disabled = answered !== total;
   }
 
   async function onSubmitEval(e) {
@@ -359,29 +285,22 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           questions: state.questions,
-          answers: answers,
+          answers,
           correct_answers: state.correctAnswers.length ? state.correctAnswers : state.questions.map(() => 'Yes'),
-          study_topics: state.studyTopics.length ? state.studyTopics : state.questions.map((q) => (q.length > 60 ? q.slice(0, 57) + '...' : q)),
+          study_topics: state.studyTopics.length ? state.studyTopics : state.questions.map(q => (q.length > 60 ? q.slice(0, 57) + '...' : q)),
         }),
       });
 
       const data = await res.json();
+
       if (!res.ok) {
-        let msg = 'Request failed';
-        if (res.status === 429) msg = 'Too many requests. Please wait a moment and try again.';
-        else if (data.detail) {
-          msg = Array.isArray(data.detail)
-            ? data.detail.map((d) => (typeof d === 'string' ? d : d.msg || JSON.stringify(d))).join('. ')
-            : String(data.detail);
-        } else if (data.message) msg = data.message;
-        throw new Error(msg);
+        throw new Error(parseApiError(res, data));
       }
 
       state.result = data;
       goToStep(3);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      showErrorEval(true, msg || 'Evaluation failed. Please try again.');
+      showErrorEval(true, err instanceof Error ? err.message : String(err));
     } finally {
       showLoadingEval(false);
       elements.evalSubmit?.removeAttribute('disabled');
@@ -400,97 +319,96 @@
       elements.scoreFill.style.strokeDasharray = circumference;
       elements.scoreFill.style.strokeDashoffset = offset;
     }
-    if (elements.scoreValue) elements.scoreValue.textContent = `${pct}%`;
+    if (elements.scoreValue) elements.scoreValue.textContent = pct + '%';
     if (elements.scoreLabel) elements.scoreLabel.textContent = r.readiness_label || '—';
+    if (elements.shareScore) elements.shareScore.textContent = pct + '%';
+
+    const strengths = Array.isArray(r.strengths) ? r.strengths : [];
+    const gaps = Array.isArray(r.gaps) ? r.gaps : [];
+    const recs = Array.isArray(r.learning_recommendations) ? r.learning_recommendations : [];
 
     if (elements.strengthsList) {
-      const strengths = (r.strengths || []).map((s) => (typeof s === 'string' ? s : (s && s.question) || String(s)));
-      elements.strengthsList.innerHTML = strengths.map((s) => `<li>${escapeHtml(s)}</li>`).join('') || '<li>—</li>';
+      elements.strengthsList.innerHTML = strengths.length
+        ? strengths.map(s => `<li>${escapeHtml(typeof s === 'string' ? s : (s?.topic || String(s)))}</li>`).join('')
+        : '<li>None recorded</li>';
     }
     if (elements.gapsList) {
-      const gaps = (r.gaps || []).map((g) => (typeof g === 'string' ? g : (g && g.question) || String(g)));
-      elements.gapsList.innerHTML = gaps.map((g) => `<li>${escapeHtml(g)}</li>`).join('') || '<li>No major gaps identified.</li>';
+      elements.gapsList.innerHTML = gaps.length
+        ? gaps.map(g => `<li>${escapeHtml(typeof g === 'string' ? g : (g?.topic || String(g)))}</li>`).join('')
+        : '<li>None — great job!</li>';
     }
-
-    const recs = (r.learning_recommendations || []).map((rec) =>
-      typeof rec === 'object' ? rec : { priority: '', topic: String(rec), why: '' }
-    );
     if (elements.roadmapList) {
-      if (recs.length === 0) {
-        elements.roadmapList.innerHTML = '<p style="color:var(--ir-muted)">All set! Keep practicing.</p>';
-      } else {
-        elements.roadmapList.innerHTML = recs.map((rec, i) => `
-          <div class="ir-roadmap-item">
-            <strong>${escapeHtml(rec.priority || '')}: ${escapeHtml(rec.topic || '')}</strong>
-            <p>${escapeHtml(rec.why || '')}</p>
-          </div>
-        `).join('');
-      }
+      elements.roadmapList.innerHTML = recs.length
+        ? recs.map(rec => {
+            const topic = typeof rec === 'string' ? rec : (rec?.topic || '');
+            const why = typeof rec === 'object' && rec?.why ? rec.why : '';
+            const prio = typeof rec === 'object' && rec?.priority ? rec.priority : '';
+            return `<div class="ir-roadmap-item"><strong>${escapeHtml(topic)}</strong>${prio ? ` <span class="ir-priority">${escapeHtml(prio)}</span>` : ''}${why ? `<p>${escapeHtml(why)}</p>` : ''}</div>`;
+          }).join('')
+        : '<p class="ir-muted">Complete the check to see your personalized roadmap.</p>';
     }
 
-    if (elements.shareScore) elements.shareScore.textContent = `${pct}%`;
+    const shareUrl = window.location.href;
+    const shareText = encodeURIComponent(`I just checked my interview readiness on MentorMuni – scored ${pct}%! 🚀`);
+    document.querySelector('.ir-share-whatsapp')?.setAttribute('href', `https://wa.me/?text=${shareText}`);
+    document.querySelector('.ir-share-linkedin')?.setAttribute('href', `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`);
 
-    const shareText = `I just checked my interview readiness on MentorMuni – scored ${pct}%! 🚀`;
-    const pageUrl = encodeURIComponent(window.location.href);
-    const whatsappText = encodeURIComponent(shareText + ' ' + window.location.href);
-    const linkedinText = encodeURIComponent(shareText);
-
-    document.querySelector('.ir-share-whatsapp')?.setAttribute('href', `https://wa.me/?text=${whatsappText}`);
-    document.querySelector('.ir-share-linkedin')?.setAttribute('href', `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}&summary=${linkedinText}`);
-  }
-
-  function onCopyLink() {
-    const url = window.location.href;
-    navigator.clipboard?.writeText(url).then(() => {
-      const btn = elements.copyLinkBtn;
-      const orig = btn?.textContent;
-      if (btn) btn.textContent = 'Copied!';
-      setTimeout(() => { if (btn) btn.textContent = orig || 'Copy link'; }, 2000);
-    }).catch(() => {});
+    if (elements.copyLinkBtn) {
+      elements.copyLinkBtn.replaceWith(elements.copyLinkBtn.cloneNode(true));
+      document.getElementById('irCopyLink')?.addEventListener('click', () => {
+        navigator.clipboard?.writeText(shareUrl).then(() => alert('Link copied!')).catch(() => {});
+      });
+    }
   }
 
   function onRetake() {
+    state.step = 0;
     state.profile = null;
     state.questions = [];
     state.correctAnswers = [];
     state.studyTopics = [];
     state.answers = {};
     state.result = null;
-    elements.profileForm?.reset();
-    onStatusChange();
     goToStep(0);
   }
 
-  function showLoadingPlan(show) {
-    if (elements.loadingPlan) elements.loadingPlan.hidden = !show;
-    if (elements.profileForm) elements.profileForm.style.display = show ? 'none' : '';
-  }
+  function bindEvents() {
+    if (elements.startBtn) elements.startBtn.addEventListener('click', () => goToStep(1));
+    if (elements.profileForm) elements.profileForm.addEventListener('submit', onSubmitProfile);
+    if (elements.evalForm) elements.evalForm.addEventListener('submit', onSubmitEval);
+    if (elements.retakeBtn) elements.retakeBtn.addEventListener('click', onRetake);
 
-  function showLoadingEval(show) {
-    if (elements.loadingEval) elements.loadingEval.hidden = !show;
-    if (elements.evalForm) elements.evalForm.style.display = show ? 'none' : '';
-  }
+    document.querySelectorAll('.ir-back-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        goToStep(parseInt(this.dataset.back, 10));
+      });
+    });
 
-  function showErrorPlan(show, msg) {
-    if (elements.errorPlan) {
-      elements.errorPlan.hidden = !show;
-      const m = elements.errorPlan.querySelector('.ir-error-msg');
-      if (m) m.textContent = msg || '';
-    }
-  }
+    document.querySelectorAll('.ir-radio input[name="currentStatus"]').forEach(r => r.addEventListener('change', onStatusChange));
+    document.getElementById('irProfileForm')?.addEventListener('change', function () {
+      clearProfileErrors();
+      onStatusChange();
+    });
+    document.getElementById('irProfileForm')?.addEventListener('input', clearProfileErrors);
 
-  function showErrorEval(show, msg) {
-    if (elements.errorEval) {
-      elements.errorEval.hidden = !show;
-      const m = elements.errorEval.querySelector('.ir-error-msg');
-      if (m) m.textContent = msg || '';
-    }
-  }
+    document.querySelectorAll('.ir-retry-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const err = this.closest('.ir-error');
+        if (err?.id === 'irErrorPlan') {
+          showLoadingPlan(false);
+          showErrorPlan(false);
+          elements.profileForm?.querySelector('button[type="submit"]')?.removeAttribute('disabled');
+        } else if (err?.id === 'irErrorEval') {
+          showLoadingEval(false);
+          showErrorEval(false);
+          elements.evalSubmit?.removeAttribute('disabled');
+        }
+      });
+    });
 
-  function escapeHtml(s) {
-    const div = document.createElement('div');
-    div.textContent = s;
-    return div.innerHTML;
+    document.getElementById('irCopyLink')?.addEventListener('click', () => {
+      navigator.clipboard?.writeText(window.location.href).then(() => alert('Link copied!')).catch(() => {});
+    });
   }
 
   if (document.readyState === 'loading') {

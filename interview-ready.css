@@ -246,19 +246,19 @@
 .ir-field-error {
   display: block;
   font-size: 13px;
-  color: var(--ir-warning);
+  color: #ef4444;
   margin-top: 6px;
   min-height: 1.2em;
 }
 
 .ir-field.has-error input,
 .ir-field.has-error select {
-  border-color: rgba(245, 158, 11, 0.6);
+  border-color: #ef4444;
 }
 
 .ir-fieldset.has-error {
   padding-left: 14px;
-  border-left: 3px solid var(--ir-warning);
+  border-left: 3px solid #ef4444;
 }
 
 .ir-field-row {
