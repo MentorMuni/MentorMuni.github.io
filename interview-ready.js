@@ -103,11 +103,11 @@
   function goToStep(step) {
     state.step = step;
     elements.steps?.forEach((el, i) => el.classList.toggle('active', i === step));
-    if (step === 2 && state.questions.length) {
+    if (step === 3 && state.questions.length) {
       renderQuestions();
       updateProgress();
     }
-    if (step === 3 && state.result) renderResults();
+    if (step === 5 && state.result) renderResults();
   }
 
   function clearProfileErrors() {
@@ -142,14 +142,6 @@
     if (p) p.textContent = msg || '';
   }
 
-  function showLoadingPlan(show) {
-    if (elements.loadingPlan) elements.loadingPlan.hidden = !show;
-  }
-
-  function showLoadingEval(show) {
-    if (elements.loadingEval) elements.loadingEval.hidden = !show;
-  }
-
   function escapeHtml(s) {
     const div = document.createElement('div');
     div.textContent = s;
@@ -180,8 +172,8 @@
 
     state.profile = { userType, experienceYears, primarySkill, targetRole, email, phone };
     elements.profileForm.querySelector('button[type="submit"]')?.setAttribute('disabled', 'disabled');
-    showLoadingPlan(true);
     showErrorPlan(false);
+    goToStep(2);
 
     const payload = {
       user_type: userType,
@@ -222,11 +214,11 @@
 
       state.answers = {};
       fetchStats();
-      goToStep(2);
+      goToStep(3);
     } catch (err) {
+      goToStep(1);
       showErrorPlan(true, err instanceof Error ? err.message : String(err));
     } finally {
-      showLoadingPlan(false);
       elements.profileForm.querySelector('button[type="submit"]')?.removeAttribute('disabled');
     }
   }
@@ -276,8 +268,8 @@
 
     const answers = state.questions.map((_, i) => state.answers[i] || 'No');
     elements.evalSubmit?.setAttribute('disabled', 'disabled');
-    showLoadingEval(true);
     showErrorEval(false);
+    goToStep(4);
 
     try {
       const res = await fetch(`${API_BASE}/interview-ready/evaluate`, {
@@ -298,11 +290,11 @@
       }
 
       state.result = data;
-      goToStep(3);
+      goToStep(5);
     } catch (err) {
+      goToStep(3);
       showErrorEval(true, err instanceof Error ? err.message : String(err));
     } finally {
-      showLoadingEval(false);
       elements.evalSubmit?.removeAttribute('disabled');
     }
   }
@@ -395,11 +387,9 @@
       btn.addEventListener('click', function () {
         const err = this.closest('.ir-error');
         if (err?.id === 'irErrorPlan') {
-          showLoadingPlan(false);
           showErrorPlan(false);
           elements.profileForm?.querySelector('button[type="submit"]')?.removeAttribute('disabled');
         } else if (err?.id === 'irErrorEval') {
-          showLoadingEval(false);
           showErrorEval(false);
           elements.evalSubmit?.removeAttribute('disabled');
         }

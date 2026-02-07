@@ -137,10 +137,6 @@
               <button type="submit" class="btn btn-primary" id="irProfileSubmit">Get My Readiness Plan</button>
             </div>
           </form>
-          <div class="ir-loading ir-loading-plan" id="irLoadingPlan" hidden>
-            <div class="ir-spinner"></div>
-            <p>Generating your personalized questions...</p>
-          </div>
           <div class="ir-error" id="irErrorPlan" hidden>
             <p class="ir-error-msg"></p>
             <button type="button" class="btn btn-outline ir-retry-btn">Try Again</button>
@@ -149,8 +145,29 @@
       </div>
     </section>
 
-    <!-- STEP 2: Questions -->
-    <section class="ir-step ir-step-2" data-step="2">
+    <!-- STEP 2: Loading Plan (dedicated page) -->
+    <section class="ir-step ir-step-loading-plan" data-step="2">
+      <div class="container ir-container">
+        <div class="ir-landing-card ir-loading-page">
+          <div class="ir-loading-hero">
+            <img src="assets/logo.png" alt="MentorMuni" class="ir-loading-logo" />
+            <h2 class="ir-loading-brand">MentorMuni</h2>
+            <p class="ir-loading-tagline">AI-powered interview preparation</p>
+          </div>
+          <div class="ir-spinner"></div>
+          <p class="ir-loading-title">Generating your personalized questions...</p>
+          <div class="ir-loading-promo">
+            <p class="ir-loading-promo-head">While you wait</p>
+            <p class="ir-loading-promo-text">For <strong>3rd year, 4th year students & working professionals</strong> — MentorMuni AI Mock Interview: realistic practice, instant feedback & personalized coaching.</p>
+            <p class="ir-loading-promo-price">Just <strong>₹1,000</strong> for full access</p>
+            <a href="contact.html" class="btn btn-outline ir-loading-promo-btn">Learn more</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: Questions -->
+    <section class="ir-step ir-step-2" data-step="3">
       <div class="container ir-container">
         <div class="ir-card">
           <h2>Answer these questions</h2>
@@ -163,10 +180,6 @@
               <button type="submit" class="btn btn-primary" id="irEvalSubmit" disabled>See My Results</button>
             </div>
           </form>
-          <div class="ir-loading ir-loading-eval" id="irLoadingEval" hidden>
-            <div class="ir-spinner"></div>
-            <p>Evaluating your readiness...</p>
-          </div>
           <div class="ir-error" id="irErrorEval" hidden>
             <p class="ir-error-msg"></p>
             <button type="button" class="btn btn-outline ir-retry-btn">Try Again</button>
@@ -175,8 +188,27 @@
       </div>
     </section>
 
-    <!-- STEP 3: Results -->
-    <section class="ir-step ir-step-3" data-step="3">
+    <!-- STEP 4: Loading Eval (dedicated page) -->
+    <section class="ir-step ir-step-loading-eval" data-step="4">
+      <div class="container ir-container">
+        <div class="ir-landing-card ir-loading-page">
+          <div class="ir-loading-hero">
+            <img src="assets/logo.png" alt="MentorMuni" class="ir-loading-logo" />
+            <h2 class="ir-loading-brand">MentorMuni</h2>
+            <p class="ir-loading-tagline">AI-powered interview preparation</p>
+          </div>
+          <div class="ir-spinner"></div>
+          <p class="ir-loading-title">Evaluating your readiness...</p>
+          <div class="ir-loading-promo">
+            <p class="ir-loading-promo-text">For 3rd year, 4th year students & working professionals: <strong>MentorMuni AI Mock Interview</strong> — ₹1,000 for full access</p>
+            <a href="contact.html" class="btn btn-outline ir-loading-promo-btn">Learn more</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5: Results -->
+    <section class="ir-step ir-step-3" data-step="5">
       <div class="container ir-container">
         <div class="ir-results-card">
           <h2>Your Interview Readiness</h2>

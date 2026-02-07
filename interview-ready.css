@@ -392,6 +392,52 @@
   margin-top: 12px;
 }
 
+.ir-loading-hero {
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.ir-loading-logo {
+  width: 56px;
+  height: auto;
+  margin-bottom: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  filter: drop-shadow(0 0 12px rgba(79,70,229,0.3));
+}
+.ir-loading-brand {
+  font-size: 22px;
+  font-weight: 800;
+  background: var(--ir-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 6px;
+  letter-spacing: -0.02em;
+}
+.ir-loading-tagline {
+  font-size: 14px;
+  color: var(--ir-muted);
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.ir-loading-page .ir-spinner {
+  margin: 0 auto 20px;
+}
+.ir-loading-title {
+  font-size: 17px;
+  color: var(--ir-muted);
+  margin: 0 0 28px;
+}
+
+.ir-loading-page {
+  padding: 48px 32px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
 .ir-loading-promo {
   margin-top: 28px;
   padding: 20px;
