@@ -159,13 +159,16 @@
     const primarySkill = (fd.get('primarySkill') || '').trim();
     const targetRole = status === 'professional' ? (fd.get('targetRole') || '').trim() : (fd.get('placementType') || '').trim();
     const email = (fd.get('email') || '').trim();
-    const phone = (fd.get('phone') || '').trim();
+    const phoneRaw = (fd.get('phone') || '').trim();
+    const phone = phoneRaw.replace(/\D/g, '');
 
     let valid = true;
     if (!status) { showFieldError('irErrorStatus', 'Required'); valid = false; }
     if (!primarySkill) { showFieldError('irErrorTechStack', 'Required'); valid = false; }
     if (!email) { showFieldError('irErrorEmail', 'Required'); valid = false; }
+    else if (!/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(email)) { showFieldError('irErrorEmail', 'Enter a valid email (e.g. you@example.com)'); valid = false; }
     if (!phone) { showFieldError('irErrorPhone', 'Required'); valid = false; }
+    else if (phone.length !== 10) { showFieldError('irErrorPhone', 'Enter 10-digit phone number'); valid = false; }
     if (isStudent && !targetRole) { showFieldError('irErrorPlacement', 'Required'); valid = false; }
     if (!isStudent && !targetRole) { showFieldError('irErrorRole', 'Required'); valid = false; }
     if (!valid) return;

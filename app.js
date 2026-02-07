@@ -78,9 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const phone = (contactForm.querySelector("[name='phone']")?.value || "").trim();
 
       let valid = true;
-      if (!name) { showContactError("cfFieldName", "cfErrorName", "This field is required"); valid = false; }
-      if (!email) { showContactError("cfFieldEmail", "cfErrorEmail", "This field is required"); valid = false; }
-      if (!phone) { showContactError("cfFieldPhone", "cfErrorPhone", "This field is required"); valid = false; }
+      if (!name) { showContactError("cfFieldName", "cfErrorName", "Required"); valid = false; }
+      if (!email) { showContactError("cfFieldEmail", "cfErrorEmail", "Required"); valid = false; }
+      else if (!/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(email)) { showContactError("cfFieldEmail", "cfErrorEmail", "Enter valid email (e.g. you@example.com)"); valid = false; }
+      if (!phone) { showContactError("cfFieldPhone", "cfErrorPhone", "Required"); valid = false; }
+      else if ((phone || "").replace(/\D/g, "").length !== 10) { showContactError("cfFieldPhone", "cfErrorPhone", "Enter 10-digit phone number"); valid = false; }
       if (!valid) return;
 
       const submitBtn = contactForm.querySelector("button[type='submit']");
